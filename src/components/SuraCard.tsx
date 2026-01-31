@@ -11,7 +11,7 @@ const SuraCard = ({ title, audioURL, originalText, translationText }: IProps) =>
     return (
         <div className="sura-card">
             <h2 className={"sura-title"}>{title}</h2>
-            <audio controls className={"sura-audio"}>
+            <audio controls className={"sura-audio"} key={audioURL}>
                 <source src={audioURL} />
                 Brawser audioni qo'llab-quvvatlamaydi
             </audio>
