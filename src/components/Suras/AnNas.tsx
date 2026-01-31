@@ -27,7 +27,7 @@ const AnNas = () => {
     return (
         <SuraCard
             title={"114. An-Nas surasi"}
-            audioURL={"/audio/Nas.mp3"}
+            audioURL={"src/public/Nas.MP3"}
             originalText={original}
             translationText={translation}
         >

@@ -214,29 +214,6 @@ body {
   }
 }
 
-@media (max-width: 992px) {
-  .app-wrapper {
-    flex-direction: column;
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-      nav ul {
-        display: flex;
-        overflow-x: auto;
-        li { flex: 0 0 auto; padding: 15px 25px; border-right: 1px solid rgba(255,255,255,0.1); }
-      }
-    }
-    .app-container {
-      margin-left: 0;
-      .main-header { padding: 50px 20px; h1 { font-size: 2.5rem; } }
-      .suras-display {
-        padding: 30px 15px;
-      }
-    }
-  }
-}
-
 .loading-bar {
   position: fixed;
   top: 0;
@@ -245,4 +222,76 @@ body {
   background: $gold-leaf;
   width: 100%;
   z-index: 2000;
+}
+
+
+@media (max-width: 1024px) {
+  .app-wrapper {
+    .sidebar {
+      width: 260px;
+
+      .sidebar-logo {
+        padding: 30px 20px;
+        h2 { font-size: 1.3rem; }
+      }
+    }
+
+    .app-container {
+      margin-left: 260px;
+
+      .main-header {
+        padding: 60px 40px;
+        h1 { font-size: 2.8rem; }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-wrapper {
+    flex-direction: column;
+
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-right: none;
+      border-bottom: 2px solid $gold-leaf;
+
+      nav {
+        max-height: 250px;
+        overflow-y: auto;
+      }
+    }
+
+    .app-container {
+      margin-left: 0;
+
+      .main-header {
+        padding: 40px 20px;
+        h1 {
+          font-size: 2rem;
+          letter-spacing: 0;
+        }
+        p {
+          font-size: 0.8rem;
+          letter-spacing: 2px;
+        }
+      }
+
+      .suras-display {
+        padding: 30px 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app-wrapper .sidebar .sidebar-logo h2 {
+    font-size: 1.1rem;
+  }
+
+  .app-wrapper .app-container .main-header h1 {
+    font-size: 1.6rem;
+  }
 }

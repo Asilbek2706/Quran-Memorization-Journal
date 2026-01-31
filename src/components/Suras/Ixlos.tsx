@@ -1,7 +1,7 @@
 import SuraCard from "../SuraCard.tsx";
 
 const Ixlos = () => {
-    const audioPath = "/audio/Ixlos.mp3";
+    const audioPath = "src/public/Ixlos.MP3";
     const original = (
         <>
             Bismillahir Rohmanir Rohiym<br/>

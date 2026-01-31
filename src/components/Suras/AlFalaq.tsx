@@ -25,7 +25,7 @@ const AlFalaq = () => {
 
     return (
         <SuraCard title={"113. Al-Falaq surasi"}
-                  audioURL={"/audio/Falaq.mp3"}
+                  audioURL={"src/public/Falaq.MP3"}
                   originalText={original}
                   translationText={translation}
         >

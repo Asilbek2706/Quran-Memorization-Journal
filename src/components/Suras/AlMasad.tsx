@@ -25,7 +25,7 @@ const AlMasad = () => {
 
     return (
         <SuraCard title={"113. Al-Masad surasi"}
-                  audioURL={"/audio/Masad.mp3"}
+                  audioURL={"src/public/Masad.MP3"}
                   originalText={original}
                   translationText={translation}
         >
