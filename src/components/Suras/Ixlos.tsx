@@ -1,7 +1,7 @@
 import SuraCard from "../SuraCard.tsx";
-import ixlosAudio from "../../suras-audio/Ixlos.mp3";
 
 const Ixlos = () => {
+    const audioPath = "/audio/Ixlos.mp3";
     const original = (
         <>
             Bismillahir Rohmanir Rohiym<br/>
@@ -24,7 +24,7 @@ const Ixlos = () => {
 
     return (
         <SuraCard title={"112. Ixlos surasi"}
-                  audioURL={ixlosAudio}
+                  audioURL={audioPath}
                   originalText={original}
                   translationText={translation}
         >
