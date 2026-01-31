@@ -1,4 +1,5 @@
 import SuraCard from "../SuraCard";
+import nasAudio from "../../suras-audio/Nas.mp3";
 
 const AnNas = () => {
     const original = (
@@ -27,7 +28,7 @@ const AnNas = () => {
     return (
         <SuraCard
             title={"114. An-Nas surasi"}
-            audioURL={"src/suras-audio/Nas.mp3"}
+            audioURL={nasAudio}
             originalText={original}
             translationText={translation}
         >

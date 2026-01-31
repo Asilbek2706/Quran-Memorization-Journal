@@ -1,4 +1,5 @@
 import SuraCard from "../SuraCard.tsx";
+import ixlosAudio from "../../suras-audio/Ixlos.mp3";
 
 const Ixlos = () => {
     const original = (
@@ -23,7 +24,7 @@ const Ixlos = () => {
 
     return (
         <SuraCard title={"112. Ixlos surasi"}
-                  audioURL={"src/suras-audio/Ixlos.mp3"}
+                  audioURL={ixlosAudio}
                   originalText={original}
                   translationText={translation}
         >

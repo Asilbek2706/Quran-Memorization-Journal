@@ -13,7 +13,7 @@ const SURAS_LIST = [
 ];
 
 function App() {
-    const [selectedSuraId, setSelectedSuraId] = useState(114);
+    const [selectedSuraId, setSelectedSuraId] = useState(111);
 
     const currentSura = SURAS_LIST.find(sura => sura.id === selectedSuraId);
 

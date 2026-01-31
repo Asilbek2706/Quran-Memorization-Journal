@@ -1,4 +1,5 @@
 import SuraCard from "../SuraCard.tsx";
+import masadAudio from "../../suras-audio/Masad.mp3";
 
 const AlMasad = () => {
     const original = (
@@ -25,7 +26,7 @@ const AlMasad = () => {
 
     return (
         <SuraCard title={"113. Al-Masad surasi"}
-                  audioURL={"src/suras-audio/Masad.mp3"}
+                  audioURL={masadAudio}
                   originalText={original}
                   translationText={translation}
         >
