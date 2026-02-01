@@ -253,7 +253,7 @@ npm run build
 
 ## 🗺 Loyiha rejasi va kelajak ishlanmalar
 
-### Joriy versiya (v0.0.0)
+### Joriy versiya (v0.1.0)
 - ✅ Asosiy interfeys
 - ✅ Barcha suralar uchun qo'llab-quvvatlash
 - ✅ Audio player
