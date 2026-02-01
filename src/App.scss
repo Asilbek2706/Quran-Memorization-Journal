@@ -2,16 +2,10 @@ $deep-emerald: #0b2521;
 $classic-green: #1a4d44;
 $soft-cream: #fcfaf5;
 $gold-leaf: #c5a059;
-$border-light: rgba(197, 160, 89, 0.2);
 $sidebar-width: 320px;
-$text-gold: #d4af37;
 $text-main: #2c3e50;
 $white: #ffffff;
 $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
-
-@mixin elegant-shadow {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-}
 
 @mixin center-content {
   display: flex;
@@ -26,11 +20,10 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 body {
-  font-family: 'Playfair Display', 'Merriweather', serif;
+  font-family: 'Playfair Display', serif;
   background-color: $soft-cream;
   color: $text-main;
   line-height: 1.6;
-  width: 100%;
   overflow-x: hidden;
 }
 
@@ -38,7 +31,6 @@ body {
   display: flex;
   width: 100vw;
   min-height: 100vh;
-  position: relative;
 
   .sidebar {
     width: $sidebar-width;
@@ -52,20 +44,43 @@ body {
     display: flex;
     flex-direction: column;
     z-index: 1000;
-    transition: all 0.4s $easing;
 
     .sidebar-logo {
-      padding: 40px 20px;
+      padding: 30px 20px;
       text-align: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
       h2 {
         font-family: 'Cinzel', serif;
         font-size: 1.5rem;
-        font-weight: 700;
         color: $gold-leaf;
         letter-spacing: 3px;
         text-transform: uppercase;
+      }
+    }
+
+    .search-box {
+      padding: 15px 20px;
+      background: rgba(0, 0, 0, 0.1);
+
+      input {
+        width: 100%;
+        padding: 12px 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(197, 160, 89, 0.3);
+        border-radius: 8px;
+        color: white;
+        outline: none;
+        transition: 0.3s;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+
+        &:focus {
+          border-color: $gold-leaf;
+          background: rgba(255, 255, 255, 0.1);
+        }
       }
     }
 
@@ -75,7 +90,6 @@ body {
       padding: 10px 0;
 
       &::-webkit-scrollbar { width: 5px; }
-      &::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
       &::-webkit-scrollbar-thumb {
         background: $gold-leaf;
         border-radius: 10px;
@@ -83,27 +97,24 @@ body {
 
       ul {
         list-style: none;
-        width: 100%;
 
         li {
-          width: 100%;
           padding: 15px 25px;
           display: flex;
           align-items: center;
           cursor: pointer;
           transition: all 0.3s $easing;
           border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-          position: relative;
 
           &:hover {
             background-color: rgba(26, 77, 68, 0.4);
-            padding-left: 30px;
             color: $gold-leaf;
           }
 
           &.active {
             background-color: $classic-green;
             color: $gold-leaf;
+            position: relative;
 
             &::before {
               content: '';
@@ -112,12 +123,6 @@ body {
               width: 4px;
               height: 100%;
               background-color: $gold-leaf;
-            }
-
-            .sura-number {
-              border-color: $gold-leaf;
-              background-color: rgba(197, 160, 89, 0.1);
-              color: $gold-leaf;
             }
           }
 
@@ -129,85 +134,33 @@ body {
             border-radius: 50%;
             margin-right: 15px;
             font-size: 0.8rem;
-            transition: all 0.3s $easing;
-            flex-shrink: 0;
-          }
-
-          .sura-name {
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: 0.5px;
           }
         }
       }
     }
   }
 
-  .search-box {
-    padding: 15px 20px;
-    background: rgba(0, 0, 0, 0.1);
-
-    input {
-      width: 100%;
-      padding: 10px 15px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(197, 160, 89, 0.3);
-      border-radius: 8px;
-      color: white;
-      font-family: 'Inter', sans-serif;
-      outline: none;
-      transition: 0.3s;
-
-      &::placeholder {
-        color: rgba(255, 255, 255, 0.4);
-      }
-
-      &:focus {
-        border-color: #c5a059;
-        background: rgba(255, 255, 255, 0.1);
-      }
-    }
-  }
-
   .app-container {
     flex: 1;
-    width: 100%;
     margin-left: $sidebar-width;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 
     .main-header {
-      width: 100%;
       background-color: $classic-green;
-      padding: 50px 40px;
+      padding: 40px 20px;
       color: $white;
-      position: relative;
       text-align: center;
       background-image: radial-gradient(circle at center, $classic-green 0%, $deep-emerald 100%);
 
-      &::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100px;
-        height: 2px;
-        background-color: $gold-leaf;
-      }
-
       h1 {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.8rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-        letter-spacing: -0.5px;
+        font-size: 2.2rem;
+        margin-bottom: 5px;
       }
 
       p {
-        font-family: 'Inter', sans-serif;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 3px;
         color: rgba(255, 255, 255, 0.6);
@@ -216,19 +169,17 @@ body {
 
     .suras-display {
       flex: 1;
-      width: 100%;
-      padding: 40px 20px;
-      max-width: 1300px;
+      padding: 20px;
+      max-width: 1100px;
       margin: 0 auto;
+      width: 100%;
 
       .loader {
         @include center-content;
         height: 400px;
-        font-size: 1.1rem;
-        color: $classic-green;
-        font-style: italic;
         flex-direction: column;
         gap: 15px;
+        color: $classic-green;
 
         &::before {
           content: "";
@@ -249,19 +200,16 @@ body {
     }
 
     .main-footer {
-      width: 100%;
-      padding: 25px;
-      background-color: #f1ede1;
-      border-top: 1px solid rgba(0,0,0,0.03);
+      padding: 20px;
+      background-color: darken($soft-cream, 2%);
       text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.05);
 
       .copyright {
-        font-size: 0.75rem;
-        color: $text-main;
+        font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 2px;
-        font-weight: 600;
-        opacity: 0.5;
+        opacity: 0.6;
       }
     }
   }
@@ -273,10 +221,11 @@ body {
 
 @media (max-width: 1024px) {
   .app-wrapper {
-    .sidebar { width: 260px; }
+    .sidebar {
+      width: 260px;
+    }
     .app-container {
       margin-left: 260px;
-      .main-header h1 { font-size: 2.2rem; }
     }
   }
 }
@@ -284,19 +233,99 @@ body {
 @media (max-width: 768px) {
   .app-wrapper {
     flex-direction: column;
+
     .sidebar {
       width: 100%;
       height: auto;
       position: relative;
       border-right: none;
-      border-bottom: 1px solid $gold-leaf;
-      nav { max-height: 250px; }
+      border-bottom: 2px solid $gold-leaf;
+
+      .sidebar-logo {
+        padding: 20px;
+      }
+
+      nav {
+        max-height: 250px;
+      }
     }
+
     .app-container {
       margin-left: 0;
+
       .main-header {
-        padding: 40px 20px;
-        h1 { font-size: 1.8rem; }
+        padding: 30px 15px;
+
+        h1 {
+          font-size: 1.8rem;
+        }
+      }
+
+      .suras-display {
+        padding: 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app-wrapper {
+    .sidebar {
+      .sidebar-logo h2 {
+        font-size: 1.2rem;
+        letter-spacing: 1.5px;
+      }
+
+      .search-box {
+        padding: 10px 15px;
+
+        input {
+          padding: 10px;
+          font-size: 0.9rem;
+        }
+      }
+
+      nav ul li {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+
+        .sura-number {
+          width: 30px;
+          height: 30px;
+          font-size: 0.7rem;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .app-container {
+      .main-header {
+        padding: 25px 10px;
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        p {
+          font-size: 0.7rem;
+          letter-spacing: 1.5px;
+        }
+      }
+
+      .suras-display {
+        padding: 10px;
+
+        .loader {
+          height: 250px;
+        }
+      }
+
+      .main-footer {
+        padding: 15px;
+
+        .copyright {
+          font-size: 0.6rem;
+        }
       }
     }
   }

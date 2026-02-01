@@ -3,17 +3,8 @@ import axios from 'axios';
 import './App.scss';
 import SuraCard from "./components/SuraCard";
 
-interface Ayah {
-    text: string;
-    numberInSurah: number;
-}
-
-interface Sura {
-    number: number;
-    englishName: string;
-    name: string;
-}
-
+interface Ayah { text: string; numberInSurah: number; }
+interface Sura { number: number; englishName: string; name: string; }
 interface SuraData {
     title: string;
     arabicAyahs: Ayah[];
@@ -53,18 +44,15 @@ function App() {
     useEffect(() => {
         const cacheKey = `sura_full_${selectedSuraId}`;
         const cachedSura = localStorage.getItem(cacheKey);
-
         if (cachedSura) {
             setSuraData(JSON.parse(cachedSura));
             return;
         }
-
         setLoading(true);
         axios.get(`https://api.alquran.cloud/v1/surah/${selectedSuraId}/editions/quran-uthmani,uz.sodik,en.transliteration`)
             .then((res: any) => {
                 const [arabic, translation, translit] = res.data.data;
                 const suraNumber = String(selectedSuraId).padStart(3, '0');
-
                 const finalData: SuraData = {
                     title: arabic.englishName,
                     arabicAyahs: arabic.ayahs,
@@ -72,24 +60,17 @@ function App() {
                     translitAyahs: translit.ayahs,
                     audioUrl: `https://server8.mp3quran.net/afs/${suraNumber}.mp3`
                 };
-
                 localStorage.setItem(cacheKey, JSON.stringify(finalData));
                 setSuraData(finalData);
                 setLoading(false);
             })
-            .catch((err: any) => {
-                console.error(err);
-                setLoading(false);
-            });
+            .catch((err: any) => { console.error(err); setLoading(false); });
     }, [selectedSuraId]);
 
     return (
         <div className="app-wrapper">
             <aside className="sidebar">
-                <div className="sidebar-logo">
-                    <h2>Qur'on</h2>
-                </div>
-
+                <div className="sidebar-logo"><h2>Qur'on</h2></div>
                 <div className="search-box">
                     <input
                         type="text"
@@ -98,7 +79,6 @@ function App() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
-
                 <nav>
                     <ul>
                         {filteredSuras.map((sura) => (
@@ -120,7 +100,6 @@ function App() {
                     <h1>Qur'oni Karim</h1>
                     <p>Jami 114 ta sura</p>
                 </header>
-
                 <main className="suras-display">
                     {loading ? (
                         <div className="loader">Yuklanmoqda...</div>
@@ -136,7 +115,6 @@ function App() {
                         <div className="error-msg">Sura topilmadi.</div>
                     )}
                 </main>
-
                 <footer className="main-footer">
                     <p className="copyright">© 2026 - Qur'on Kundaligi</p>
                 </footer>
@@ -144,5 +122,4 @@ function App() {
         </div>
     );
 }
-
 export default App;
