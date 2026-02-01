@@ -4,8 +4,10 @@ import AnNas from "./components/Suras/AnNas.tsx";
 import AlFalaq from "./components/Suras/AlFalaq.tsx";
 import Ixlos from "./components/Suras/Ixlos.tsx";
 import AlMasad from "./components/Suras/AlMasad.tsx";
+import AnNasr from "./components/Suras/AnNasr.tsx";
 
 const SURAS_LIST = [
+    { id: 110, name: "An-Nasr", component: <AnNasr /> },
     { id: 111, name: "Masad", component: <AlMasad /> },
     { id: 112, name: "Ixlos", component: <Ixlos /> },
     { id: 113, name: "Al-Falaq", component: <AlFalaq /> },
@@ -13,7 +15,7 @@ const SURAS_LIST = [
 ];
 
 function App() {
-    const [selectedSuraId, setSelectedSuraId] = useState(111);
+    const [selectedSuraId, setSelectedSuraId] = useState(110);
 
     const currentSura = SURAS_LIST.find(sura => sura.id === selectedSuraId);
 
