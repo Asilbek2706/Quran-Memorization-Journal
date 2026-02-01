@@ -31,6 +31,7 @@ body {
   color: $text-main;
   line-height: 1.6;
   width: 100%;
+  overflow-x: hidden;
 }
 
 .app-wrapper {
@@ -51,15 +52,16 @@ body {
     display: flex;
     flex-direction: column;
     z-index: 1000;
+    transition: all 0.4s $easing;
 
     .sidebar-logo {
-      padding: 50px 30px;
+      padding: 40px 20px;
       text-align: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
       h2 {
         font-family: 'Cinzel', serif;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: $gold-leaf;
         letter-spacing: 3px;
@@ -70,10 +72,14 @@ body {
     nav {
       flex: 1;
       overflow-y: auto;
-      padding: 20px 0;
+      padding: 10px 0;
 
-      &::-webkit-scrollbar { width: 3px; }
-      &::-webkit-scrollbar-thumb { background: $gold-leaf; }
+      &::-webkit-scrollbar { width: 5px; }
+      &::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+      &::-webkit-scrollbar-thumb {
+        background: $gold-leaf;
+        border-radius: 10px;
+      }
 
       ul {
         list-style: none;
@@ -81,16 +87,17 @@ body {
 
         li {
           width: 100%;
-          padding: 20px 35px;
+          padding: 15px 25px;
           display: flex;
           align-items: center;
           cursor: pointer;
-          transition: background 0.3s $easing, color 0.3s $easing;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+          transition: all 0.3s $easing;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.02);
           position: relative;
 
           &:hover {
-            background-color: rgba(26, 77, 68, 0.5);
+            background-color: rgba(26, 77, 68, 0.4);
+            padding-left: 30px;
             color: $gold-leaf;
           }
 
@@ -102,7 +109,7 @@ body {
               content: '';
               position: absolute;
               left: 0;
-              width: 5px;
+              width: 4px;
               height: 100%;
               background-color: $gold-leaf;
             }
@@ -110,29 +117,26 @@ body {
             .sura-number {
               border-color: $gold-leaf;
               background-color: rgba(197, 160, 89, 0.1);
+              color: $gold-leaf;
             }
           }
 
           .sura-number {
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             @include center-content;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            margin-right: 20px;
-            font-size: 0.9rem;
-            font-weight: 300;
-            transition: all 0.4s $easing;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 0.8rem;
+            transition: all 0.3s $easing;
             flex-shrink: 0;
           }
 
           .sura-name {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 400;
             letter-spacing: 0.5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
           }
         }
       }
@@ -150,7 +154,7 @@ body {
     .main-header {
       width: 100%;
       background-color: $classic-green;
-      padding: 80px 60px;
+      padding: 50px 40px;
       color: $white;
       position: relative;
       text-align: center;
@@ -162,87 +166,91 @@ body {
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 150px;
-        height: 3px;
+        width: 100px;
+        height: 2px;
         background-color: $gold-leaf;
       }
 
       h1 {
         font-family: 'Playfair Display', serif;
-        font-size: 3.5rem;
+        font-size: 2.8rem;
         font-weight: 700;
-        margin-bottom: 15px;
-        letter-spacing: -1px;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
       }
 
       p {
         font-family: 'Inter', sans-serif;
-        font-size: 1rem;
+        font-size: 0.85rem;
         text-transform: uppercase;
-        letter-spacing: 4px;
-        color: rgba(255, 255, 255, 0.7);
-        margin-bottom: 10px;
+        letter-spacing: 3px;
+        color: rgba(255, 255, 255, 0.6);
       }
     }
 
     .suras-display {
       flex: 1;
       width: 100%;
-      padding: 60px 40px;
-      max-width: 1200px;
+      padding: 40px 20px;
+      max-width: 1300px;
       margin: 0 auto;
-      background-color: transparent;
-    }
 
+      .loader {
+        @include center-content;
+        height: 400px;
+        font-size: 1.1rem;
+        color: $classic-green;
+        font-style: italic;
+        flex-direction: column;
+        gap: 15px;
+
+        &::before {
+          content: "";
+          width: 40px;
+          height: 40px;
+          border: 3px solid rgba(26, 77, 68, 0.1);
+          border-top-color: $gold-leaf;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+      }
+
+      .error-msg {
+        text-align: center;
+        padding: 50px;
+        color: #d63031;
+      }
+    }
 
     .main-footer {
       width: 100%;
-      padding: 40px;
-      background-color: darken($soft-cream, 2%);
-      border-top: 1px solid rgba(0,0,0,0.05);
+      padding: 25px;
+      background-color: #f1ede1;
+      border-top: 1px solid rgba(0,0,0,0.03);
       text-align: center;
 
       .copyright {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         color: $text-main;
         text-transform: uppercase;
         letter-spacing: 2px;
         font-weight: 600;
-        opacity: 0.7;
+        opacity: 0.5;
       }
     }
   }
 }
 
-.loading-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: $gold-leaf;
-  width: 100%;
-  z-index: 2000;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
-
 
 @media (max-width: 1024px) {
   .app-wrapper {
-    .sidebar {
-      width: 260px;
-
-      .sidebar-logo {
-        padding: 30px 20px;
-        h2 { font-size: 1.3rem; }
-      }
-    }
-
+    .sidebar { width: 260px; }
     .app-container {
       margin-left: 260px;
-
-      .main-header {
-        padding: 60px 40px;
-        h1 { font-size: 2.8rem; }
-      }
+      .main-header h1 { font-size: 2.2rem; }
     }
   }
 }
@@ -250,48 +258,20 @@ body {
 @media (max-width: 768px) {
   .app-wrapper {
     flex-direction: column;
-
     .sidebar {
       width: 100%;
       height: auto;
       position: relative;
       border-right: none;
-      border-bottom: 2px solid $gold-leaf;
-
-      nav {
-        max-height: 250px;
-        overflow-y: auto;
-      }
+      border-bottom: 1px solid $gold-leaf;
+      nav { max-height: 250px; }
     }
-
     .app-container {
       margin-left: 0;
-
       .main-header {
         padding: 40px 20px;
-        h1 {
-          font-size: 2rem;
-          letter-spacing: 0;
-        }
-        p {
-          font-size: 0.8rem;
-          letter-spacing: 2px;
-        }
-      }
-
-      .suras-display {
-        padding: 30px 15px;
+        h1 { font-size: 1.8rem; }
       }
     }
-  }
-}
-
-@media (max-width: 480px) {
-  .app-wrapper .sidebar .sidebar-logo h2 {
-    font-size: 1.1rem;
-  }
-
-  .app-wrapper .app-container .main-header h1 {
-    font-size: 1.6rem;
   }
 }

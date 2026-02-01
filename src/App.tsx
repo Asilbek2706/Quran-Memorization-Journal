@@ -1,41 +1,81 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import './App.scss';
-import AnNas from "./components/Suras/AnNas.tsx";
-import AlFalaq from "./components/Suras/AlFalaq.tsx";
-import Ixlos from "./components/Suras/Ixlos.tsx";
-import AlMasad from "./components/Suras/AlMasad.tsx";
-import AnNasr from "./components/Suras/AnNasr.tsx";
+import SuraCard from "./components/SuraCard";
 
-const SURAS_LIST = [
-    { id: 110, name: "An-Nasr", component: <AnNasr /> },
-    { id: 111, name: "Masad", component: <AlMasad /> },
-    { id: 112, name: "Ixlos", component: <Ixlos /> },
-    { id: 113, name: "Al-Falaq", component: <AlFalaq /> },
-    { id: 114, name: "An-Nas", component: <AnNas /> },
-];
+interface Ayah {
+    text: string;
+    numberInSurah: number;
+}
+
+interface Sura {
+    number: number;
+    englishName: string;
+    name: string;
+}
+
+interface SuraData {
+    title: string;
+    arabicAyahs: Ayah[];
+    uzbekAyahs: Ayah[];
+    translitAyahs: Ayah[];
+    audioUrl: string;
+}
 
 function App() {
-    const [selectedSuraId, setSelectedSuraId] = useState(110);
+    const [suras, setSuras] = useState<Sura[]>([]);
+    const [selectedSuraId, setSelectedSuraId] = useState<number>(1);
+    const [suraData, setSuraData] = useState<SuraData | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const currentSura = SURAS_LIST.find(sura => sura.id === selectedSuraId);
+    useEffect(() => {
+        axios.get('https://api.alquran.cloud/v1/surah')
+            .then((res: any) => {
+                setSuras(res.data.data);
+            })
+            .catch((err: any) => console.error("Ro'yxatda xato:", err));
+    }, []);
+
+    useEffect(() => {
+        setLoading(true);
+
+        axios.get(`https://api.alquran.cloud/v1/surah/${selectedSuraId}/editions/quran-uthmani,uz.sodik,en.transliteration`)
+            .then((res: any) => {
+                const [arabic, translation, translit] = res.data.data;
+
+                const suraNumber = String(selectedSuraId).padStart(3, '0');
+
+                setSuraData({
+                    title: arabic.englishName,
+                    arabicAyahs: arabic.ayahs,
+                    uzbekAyahs: translation.ayahs,
+                    translitAyahs: translit.ayahs,
+                    audioUrl: `https://server8.mp3quran.net/afs/${suraNumber}.mp3`
+                });
+                setLoading(false);
+            })
+            .catch((err: any) => {
+                console.error("Ma'lumot yuklashda xato:", err);
+                setLoading(false);
+            });
+    }, [selectedSuraId]);
 
     return (
         <div className="app-wrapper">
-
             <aside className="sidebar">
                 <div className="sidebar-logo">
-                    <h2>30-Pora</h2>
+                    <h2>Qur'on</h2>
                 </div>
                 <nav>
                     <ul>
-                        {SURAS_LIST.map((sura) => (
+                        {suras.map((sura) => (
                             <li
-                                key={sura.id}
-                                className={selectedSuraId === sura.id ? 'active' : ''}
-                                onClick={() => setSelectedSuraId(sura.id)}
+                                key={sura.number}
+                                className={selectedSuraId === sura.number ? 'active' : ''}
+                                onClick={() => setSelectedSuraId(sura.number)}
                             >
-                                <span className="sura-number">{sura.id}</span>
-                                <span className="sura-name">{sura.name}</span>
+                                <span className="sura-number">{sura.number}</span>
+                                <span className="sura-name">{sura.englishName}</span>
                             </li>
                         ))}
                     </ul>
@@ -44,12 +84,24 @@ function App() {
 
             <div className="app-container">
                 <header className="main-header">
-                    <h1>Mening Qur'on kundaligim</h1>
-                    <p>Yodlash jarayoni: {SURAS_LIST.length} / 37</p>
+                    <h1>Qur'oni Karim</h1>
+                    <p>Hammasi bo'lib 114 ta sura</p>
                 </header>
 
                 <main className="suras-display">
-                    {currentSura ? currentSura.component : <p>Sura tanlanmagan</p>}
+                    {loading ? (
+                        <div className="loader">Sura ma'lumotlari yuklanmoqda...</div>
+                    ) : suraData ? (
+                        <SuraCard
+                            title={`${selectedSuraId}. ${suraData.title}`}
+                            audioURL={suraData.audioUrl}
+                            originalText={suraData.arabicAyahs}
+                            translationText={suraData.uzbekAyahs}
+                            translitText={suraData.translitAyahs}
+                        />
+                    ) : (
+                        <div className="error-msg">Ma'lumot topilmadi.</div>
+                    )}
                 </main>
 
                 <footer className="main-footer">
