@@ -1,6 +1,6 @@
 $classic-green: #1a4d44;
 $deep-emerald: #0b2521;
-$gold-leaf: #c5a059;
+$gold-leaf: #c38017;
 $soft-cream: #fcfaf5;
 $text-main: #2c3e50;
 $white: #ffffff;
@@ -163,14 +163,14 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
           }
 
           &.translit p {
-            color: $gold-leaf;
-            font-style: italic;
+            color: #111D3EFF;
             font-weight: 500;
           }
 
           &.translation p {
             color: $text-main;
             opacity: 0.9;
+            font-style: italic;
             font-weight: 400;
           }
         }

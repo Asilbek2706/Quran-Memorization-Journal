@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import '../styles/SuraCard.scss';
+import { SettingsContext } from '../contexts/SettingsContext';
 
 const uzbekNames: { [key: number]: string } = {
     1: "Fotiha surasi", 2: "Baqara surasi", 3: "Oli Imron surasi", 4: "Niso surasi", 5: "Moida surasi", 6: "An'om surasi", 7: "A'rof surasi", 8: "Anfol surasi", 9: "Tavba surasi", 10: "Yunus surasi",
@@ -28,9 +29,14 @@ interface IProps {
 }
 
 const SuraCard = ({ title, audioURL, originalText, translationText, translitText }: IProps) => {
-    const [fontArabic, setFontArabic] = useState(2.2);
-    const [fontTranslit, setFontTranslit] = useState(1.1);
-    const [fontTranslation, setFontTranslation] = useState(1.1);
+    const context = useContext(SettingsContext);
+
+    if (!context) return null;
+
+    const { fontArabic, setFontArabic } = context;
+
+    const [fontTranslit, setFontTranslit] = React.useState(1.1);
+    const [fontTranslation, setFontTranslation] = React.useState(1.1);
 
     const suraNum = parseInt(audioURL.split('/').pop()?.replace('.mp3', '') || '1');
     const uzSuraName = uzbekNames[suraNum] || title;
@@ -43,9 +49,10 @@ const SuraCard = ({ title, audioURL, originalText, translationText, translitText
                     <div className="setting-item">
                         <small>Arabcha</small>
                         <div className="btns">
-                            <button onClick={() => setFontArabic(prev => Math.max(1.5, prev - 0.2))}>−</button>
+                            {/* 2. Endi global setFontArabic ishlaydi */}
+                            <button onClick={() => setFontArabic(Math.max(1.5, fontArabic - 0.2))}>−</button>
                             <span className="val">{fontArabic.toFixed(1)}</span>
-                            <button onClick={() => setFontArabic(prev => Math.min(4.0, prev + 0.2))}>+</button>
+                            <button onClick={() => setFontArabic(Math.min(4.0, fontArabic + 0.2))}>+</button>
                         </div>
                     </div>
                     <div className="setting-item">
