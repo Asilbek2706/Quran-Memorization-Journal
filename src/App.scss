@@ -40,7 +40,7 @@ $pattern-url: 'https://www.transparenttextures.com/patterns/arabesque.png';
 }
 
 body {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Lora', serif;
   background-color: $soft-cream;
   color: $text-main;
   overflow-x: hidden;
@@ -88,15 +88,14 @@ body {
   background: $deep-emerald;
   color: $gold-leaf;
   border: 1px solid $gold-leaf;
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  font-size: 1.4rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  font-size: 1.6rem;
   cursor: pointer;
   @include flex-center;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   transition: all 0.3s $easing;
-
   &:active {
     transform: scale(0.9);
   }
@@ -123,10 +122,11 @@ body {
     text-align: center;
     border-bottom: 1px solid rgba($gold-leaf, 0.2);
     h2 {
-      font-family: 'Cinzel', serif;
-      font-size: 1.7rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
       color: $gold-leaf;
-      letter-spacing: 4px;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
   }
@@ -135,13 +135,14 @@ body {
     padding: 15px 20px;
     input {
       width: 100%;
-      padding: 12px 15px;
+      padding: 14px 15px;
       background: rgba($white, 0.08);
       border: 1px solid rgba($gold-leaf, 0.3);
       border-radius: 8px;
       color: $white;
       outline: none;
-      font-family: inherit;
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
       &::placeholder { color: rgba($white, 0.4); }
       &:focus { border-color: $gold-leaf; background: rgba($white, 0.12); }
     }
@@ -155,7 +156,7 @@ body {
     ul {
       list-style: none;
       li {
-        padding: 14px 25px;
+        padding: 16px 25px;
         margin: 4px 12px;
         border-radius: 8px;
         display: flex;
@@ -163,20 +164,24 @@ body {
         cursor: pointer;
         transition: 0.2s;
         color: rgba($white, 0.7);
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        font-size: 1rem;
         &:hover { background: rgba($white, 0.05); color: $gold-leaf; }
         &.active {
           background: $deep-emerald;
           color: $gold-leaf;
-          border-left: 3px solid $gold-leaf;
+          border-left: 4px solid $gold-leaf;
         }
         .sura-number {
-          width: 30px;
-          height: 30px;
+          width: 32px;
+          height: 32px;
           border: 1px solid rgba($gold-leaf, 0.4);
           border-radius: 6px;
           margin-right: 12px;
           @include flex-center;
-          font-size: 0.75rem;
+          font-size: 0.85rem;
+          font-weight: 700;
           flex-shrink: 0;
         }
       }
@@ -199,8 +204,21 @@ body {
     color: $white;
     background-image: url($pattern-url);
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    h1 { font-family: 'Cinzel', serif; font-size: 2.8rem; margin-bottom: 8px; }
-    p { text-transform: uppercase; letter-spacing: 4px; color: $gold-leaf; font-size: 0.85rem; }
+    border-bottom: 2px solid $gold-leaf;
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+    p {
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: $gold-leaf;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
   }
 
   .suras-display {
@@ -214,37 +232,51 @@ body {
 
 .main-footer {
   background: $deep-emerald;
-  padding: 30px;
+  padding: 40px 20px 120px;
   text-align: center;
   color: rgba($white, 0.4);
-  font-size: 0.8rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
   border-top: 1px solid rgba($gold-leaf, 0.2);
 }
 
 .sura-card-styles {
   background: $white;
   border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  padding: 35px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
   margin-bottom: 80px;
 
   .ayah-block {
-    margin-bottom: 35px;
-    border-bottom: 1px solid #f5f5f5;
-    padding-bottom: 25px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 30px;
     &:last-child { border-bottom: none; }
 
     .arabic {
-      font-size: 2.1rem;
+      font-size: 2.5rem;
       text-align: right;
       direction: rtl;
       font-family: 'Amiri', serif;
-      line-height: 2.2;
+      line-height: 2.5;
       color: $deep-emerald;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      display: block;
     }
-    .translation { font-size: 1.05rem; line-height: 1.6; color: #333; }
-    .transliteration { font-size: 0.9rem; color: $gold-dark; font-style: italic; margin-top: 5px; }
+    .translation {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #333;
+    }
+    .transliteration {
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      color: $gold-dark;
+      font-style: italic;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
   }
 }
 
@@ -256,45 +288,102 @@ body {
   z-index: 2500;
   background-color: $classic-green;
   background-image: url($pattern-url);
-  padding: 15px 30px;
+  background-blend-mode: overlay;
+  padding: 20px 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 2px solid $gold-leaf;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+  border-top: 3px solid $gold-leaf;
+  box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
   transition: all $transition-speed $easing;
 
   audio {
     width: 100%;
-    max-width: 800px;
-    height: 45px;
-    filter: sepia(20%) saturate(70%) hue-rotate(90deg) brightness(110%) contrast(90%);
-    border-radius: 50px;
+    max-width: 900px;
+    height: 54px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
 
     &::-webkit-media-controls-enclosure {
-      background-color: rgba($white, 0.1);
-      border: 1px solid rgba($gold-leaf, 0.3);
+      background-color: rgba($white, 0.05);
+      border: 1px solid rgba($gold-leaf, 0.2);
+      border-radius: 100px;
+      padding: 0 10px;
     }
 
     &::-webkit-media-controls-panel {
-      background-image: linear-gradient(to right, rgba($deep-emerald, 0.9), rgba($classic-green, 0.9));
+      background-image: linear-gradient(
+                      135deg,
+                      rgba($deep-emerald, 0.9) 0%,
+                      rgba($classic-green, 0.8) 100%
+      );
     }
 
-    &::-webkit-media-controls-play-button,
-    &::-webkit-media-controls-mute-button {
+    &::-webkit-media-controls-play-button {
       background-color: $gold-leaf;
       border-radius: 50%;
-      transform: scale(1.1);
+      transform: scale(1.2);
+      margin-right: 15px;
+      transition: 0.3s;
       &:hover {
-        background-color: $white;
+        background-color: $gold-dark;
+        transform: scale(1.3);
       }
     }
 
     &::-webkit-media-controls-current-time-display,
     &::-webkit-media-controls-time-remaining-display {
       color: $gold-leaf;
-      font-family: 'Cinzel', serif;
-      font-weight: bold;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+
+    &::-webkit-media-controls-timeline {
+      background-color: rgba($gold-leaf, 0.2);
+      border-radius: 10px;
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+
+    &::-webkit-media-controls-volume-slider {
+      background-color: rgba($gold-leaf, 0.2);
+      border-radius: 10px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    &::-webkit-media-controls-mute-button {
+      background-color: rgba($white, 0.1);
+      border-radius: 50%;
+      &:hover {
+        background-color: $gold-leaf;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .custom-player-ui {
+    left: 0;
+    padding: 15px 20px;
+    border-top-width: 2px;
+
+    audio {
+      height: 48px;
+      &::-webkit-media-controls-play-button {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-player-ui {
+    padding: 12px 10px;
+    audio {
+      height: 45px;
     }
   }
 }
@@ -304,15 +393,20 @@ body {
   height: 300px;
   flex-direction: column;
   .spinner {
-    width: 45px;
-    height: 45px;
-    border: 3px solid rgba($gold-leaf, 0.1);
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba($gold-leaf, 0.1);
     border-top-color: $gold-leaf;
     border-radius: 50%;
     animation: spin 1s infinite linear;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
-  span { font-family: 'Cinzel', serif; color: $classic-green; }
+  span {
+    font-family: 'Montserrat', sans-serif;
+    color: $classic-green;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -332,24 +426,25 @@ button, input, li {
   .app-container {
     margin-left: 0 !important;
   }
-  .custom-player-ui {
-    left: 0;
-    padding: 10px 15px;
-    audio {
-      height: 40px;
-    }
-  }
 }
 
 @media (max-width: 768px) {
   .app-container .main-header {
-    padding: 80px 20px 40px;
-    h1 { font-size: 2rem; }
-    p { font-size: 0.7rem; letter-spacing: 2px; }
+    padding: 100px 20px 50px;
+    h1 { font-size: 2.2rem; }
+    p { font-size: 0.8rem; }
+  }
+  .suras-display {
+    padding: 20px 15px;
   }
   .sura-card-styles {
-    padding: 20px;
-    .ayah-block .arabic { font-size: 1.8rem; }
+    padding: 25px 20px;
+    border-radius: 15px;
+    .ayah-block {
+      .arabic { font-size: 2.2rem; line-height: 2.3; }
+      .translation { font-size: 1.15rem; }
+      .transliteration { font-size: 1rem; }
+    }
   }
 }
 
@@ -358,6 +453,12 @@ button, input, li {
     width: 85%;
   }
   .main-header {
-    padding: 90px 15px 40px !important;
+    padding: 110px 15px 45px !important;
+    h1 { font-size: 1.8rem; }
   }
+  .sura-card-styles {
+    padding: 20px 15px;
+    .ayah-block .arabic { font-size: 2rem; }
+  }
+  .sidebar .sidebar-logo h2 { font-size: 1.3rem; }
 }
