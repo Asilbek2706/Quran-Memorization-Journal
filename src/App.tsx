@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.scss';
 import SuraCard from "./components/SuraCard";
 import { SettingsProvider } from "./contexts/SettingsContext";
-import ErrorBoundary from "./components/ErrorBoundary"; // ErrorBoundary import qilindi
+import ErrorBoundary from "./components/ErrorBoundary";
 
 interface Ayah { text: string; numberInSurah: number; }
 interface Sura { number: number; englishName: string; name: string; }
@@ -36,6 +36,7 @@ function App() {
     const [selectedSuraId, setSelectedSuraId] = useState<number>(1);
     const [suraData, setSuraData] = useState<SuraData | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const cachedSuras = localStorage.getItem('suras_list');
@@ -91,11 +92,22 @@ function App() {
             });
     }, [selectedSuraId]);
 
+    const handleSuraSelect = (id: number) => {
+        setSelectedSuraId(id);
+        setIsSidebarOpen(false);
+    };
+
     return (
         <ErrorBoundary>
             <SettingsProvider>
-                <div className="app-wrapper">
-                    <aside className="sidebar">
+                <div className={`app-wrapper ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+                    <button className="menu-toggler" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                        {isSidebarOpen ? '✕' : '☰'}
+                    </button>
+
+                    {isSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>}
+
+                    <aside className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
                         <div className="sidebar-logo"><h2>QUR'ON</h2></div>
                         <div className="search-box">
                             <input
@@ -111,7 +123,7 @@ function App() {
                                     <li
                                         key={sura.number}
                                         className={selectedSuraId === sura.number ? 'active' : ''}
-                                        onClick={() => setSelectedSuraId(sura.number)}
+                                        onClick={() => handleSuraSelect(sura.number)}
                                     >
                                         <span className="sura-number">{sura.number}</span>
                                         <span className="sura-name">{uzbekNames[sura.number]} surasi</span>

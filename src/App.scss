@@ -27,6 +27,39 @@ body {
   overflow-x: hidden;
 }
 
+.menu-toggler {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1100;
+  background: $deep-emerald;
+  color: $gold-leaf;
+  border: 1px solid $gold-leaf;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: 0.3s;
+
+  &:hover {
+    background: $classic-green;
+  }
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  transition: 0.3s;
+}
+
 .app-wrapper {
   display: flex;
   width: 100vw;
@@ -44,6 +77,7 @@ body {
     display: flex;
     flex-direction: column;
     z-index: 1000;
+    transition: transform 0.4s $easing;
 
     .sidebar-logo {
       padding: 30px 20px;
@@ -146,6 +180,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    transition: margin-left 0.4s $easing;
 
     .main-header {
       background-color: $classic-green;
@@ -231,22 +266,32 @@ body {
 }
 
 @media (max-width: 768px) {
+  .menu-toggler {
+    display: block;
+  }
+
   .app-wrapper {
     flex-direction: column;
 
     .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-      border-right: none;
-      border-bottom: 2px solid $gold-leaf;
+      width: 280px;
+      position: fixed;
+      left: 0;
+      transform: translateX(-100%);
+      height: 100vh;
+      border-right: 2px solid $gold-leaf;
+      border-bottom: none;
+
+      &.active {
+        transform: translateX(0);
+      }
 
       .sidebar-logo {
         padding: 20px;
       }
 
       nav {
-        max-height: 250px;
+        max-height: none;
       }
     }
 
@@ -254,7 +299,7 @@ body {
       margin-left: 0;
 
       .main-header {
-        padding: 30px 15px;
+        padding: 60px 15px 30px;
 
         h1 {
           font-size: 1.8rem;
@@ -271,6 +316,8 @@ body {
 @media (max-width: 480px) {
   .app-wrapper {
     .sidebar {
+      width: 85%;
+
       .sidebar-logo h2 {
         font-size: 1.2rem;
         letter-spacing: 1.5px;
@@ -300,7 +347,7 @@ body {
 
     .app-container {
       .main-header {
-        padding: 25px 10px;
+        padding: 70px 10px 25px;
 
         h1 {
           font-size: 1.5rem;
