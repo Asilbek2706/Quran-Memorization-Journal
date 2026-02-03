@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.scss';
 import SuraCard from "./components/SuraCard";
 import { SettingsProvider } from "./contexts/SettingsContext";
+import ErrorBoundary from "./components/ErrorBoundary"; // ErrorBoundary import qilindi
 
 interface Ayah { text: string; numberInSurah: number; }
 interface Sura { number: number; englishName: string; name: string; }
@@ -90,64 +91,65 @@ function App() {
             });
     }, [selectedSuraId]);
 
-    // 2. Return ichida hamma narsani <SettingsProvider> bilan o'rab chiqing
     return (
-        <SettingsProvider>
-            <div className="app-wrapper">
-                <aside className="sidebar">
-                    <div className="sidebar-logo"><h2>QUR'ON</h2></div>
-                    <div className="search-box">
-                        <input
-                            type="text"
-                            placeholder="Surani qidirish..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
-                    <nav>
-                        <ul>
-                            {filteredSuras.map((sura) => (
-                                <li
-                                    key={sura.number}
-                                    className={selectedSuraId === sura.number ? 'active' : ''}
-                                    onClick={() => setSelectedSuraId(sura.number)}
-                                >
-                                    <span className="sura-number">{sura.number}</span>
-                                    <span className="sura-name">{uzbekNames[sura.number]} surasi</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-                </aside>
-
-                <div className="app-container">
-                    <header className="main-header">
-                        <h1>Qur'oni Karim</h1>
-                        <p>O'zbekcha ma'nolari bilan</p>
-                    </header>
-
-                    <main className="suras-display">
-                        {loading ? (
-                            <div className="loader">Yuklanmoqda...</div>
-                        ) : suraData ? (
-                            <SuraCard
-                                title={`${selectedSuraId}. ${suraData.title} surasi`}
-                                audioURL={suraData.audioUrl}
-                                originalText={suraData.arabicAyahs}
-                                translationText={suraData.uzbekAyahs}
-                                translitText={suraData.translitAyahs}
+        <ErrorBoundary>
+            <SettingsProvider>
+                <div className="app-wrapper">
+                    <aside className="sidebar">
+                        <div className="sidebar-logo"><h2>QUR'ON</h2></div>
+                        <div className="search-box">
+                            <input
+                                type="text"
+                                placeholder="Surani qidirish..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
-                        ) : (
-                            <div className="error-msg">Ma'lumot topilmadi.</div>
-                        )}
-                    </main>
+                        </div>
+                        <nav>
+                            <ul>
+                                {filteredSuras.map((sura) => (
+                                    <li
+                                        key={sura.number}
+                                        className={selectedSuraId === sura.number ? 'active' : ''}
+                                        onClick={() => setSelectedSuraId(sura.number)}
+                                    >
+                                        <span className="sura-number">{sura.number}</span>
+                                        <span className="sura-name">{uzbekNames[sura.number]} surasi</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    </aside>
 
-                    <footer className="main-footer">
-                        <p className="copyright">© 2026 - Qur'on Kundaligi</p>
-                    </footer>
+                    <div className="app-container">
+                        <header className="main-header">
+                            <h1>Qur'oni Karim</h1>
+                            <p>O'zbekcha ma'nolari bilan</p>
+                        </header>
+
+                        <main className="suras-display">
+                            {loading ? (
+                                <div className="loader">Yuklanmoqda...</div>
+                            ) : suraData ? (
+                                <SuraCard
+                                    title={`${selectedSuraId}. ${suraData.title} surasi`}
+                                    audioURL={suraData.audioUrl}
+                                    originalText={suraData.arabicAyahs}
+                                    translationText={suraData.uzbekAyahs}
+                                    translitText={suraData.translitAyahs}
+                                />
+                            ) : (
+                                <div className="error-msg">Ma'lumot topilmadi.</div>
+                            )}
+                        </main>
+
+                        <footer className="main-footer">
+                            <p className="copyright">© 2026 - Qur'on Kundaligi</p>
+                        </footer>
+                    </div>
                 </div>
-            </div>
-        </SettingsProvider>
+            </SettingsProvider>
+        </ErrorBoundary>
     );
 }
 

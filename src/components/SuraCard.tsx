@@ -5,7 +5,16 @@ import '../styles/SuraCard.scss';
 import { SettingsContext } from '../contexts/SettingsContext';
 
 const uzbekNames: { [key: number]: string } = {
-    1: "Fotiha surasi", 2: "Baqara surasi", 3: "Oli Imron surasi", 4: "Niso surasi", 5: "Moida surasi", 6: "An'om surasi", 7: "A'rof surasi", 8: "Anfol surasi", 9: "Tavba surasi", 10: "Yunus surasi",
+    1: "Fotiha surasi",
+    2: "Baqara surasi",
+    3: "Oli Imron surasi",
+    4: "Niso surasi",
+    5: "Moida surasi",
+    6: "An'om surasi",
+    7: "A'rof surasi",
+    8: "Anfol surasi",
+    9: "Tavba surasi",
+    10: "Yunus surasi",
     11: "Hud surasi", 12: "Yusuf surasi", 13: "Ra'd surasi", 14: "Ibrohim surasi", 15: "Hijr surasi", 16: "Nahl surasi", 17: "Isro surasi", 18: "Kahf surasi", 19: "Maryam surasi", 20: "Toha surasi",
     21: "Anbiyo surasi", 22: "Hajj surasi", 23: "Mo‘minun surasi", 24: "Nur surasi", 25: "Furqon surasi", 26: "Shuaro surasi", 27: "Namli surasi", 28: "Qasas surasi", 29: "Ankabut surasi", 30: "Rum surasi",
     31: "Luqmon surasi", 32: "Sajda surasi", 33: "Ahzob surasi", 34: "Saba surasi", 35: "Fatir surasi", 36: "Yosin surasi", 37: "Soffat surasi", 38: "Sod surasi", 39: "Zumar surasi", 40: "G‘ofir surasi",
@@ -49,7 +58,6 @@ const SuraCard = ({ title, audioURL, originalText, translationText, translitText
                     <div className="setting-item">
                         <small>Arabcha</small>
                         <div className="btns">
-                            {/* 2. Endi global setFontArabic ishlaydi */}
                             <button onClick={() => setFontArabic(Math.max(1.5, fontArabic - 0.2))}>−</button>
                             <span className="val">{fontArabic.toFixed(1)}</span>
                             <button onClick={() => setFontArabic(Math.min(4.0, fontArabic + 0.2))}>+</button>
