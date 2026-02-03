@@ -5,8 +5,17 @@ import SuraCard from "./components/SuraCard";
 import { SettingsProvider } from "./contexts/SettingsContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-interface Ayah { text: string; numberInSurah: number; }
-interface Sura { number: number; englishName: string; name: string; }
+interface Ayah {
+    text: string;
+    numberInSurah: number;
+}
+
+interface Sura {
+    number: number;
+    englishName: string;
+    name: string;
+}
+
 interface SuraData {
     title: string;
     arabicAyahs: Ayah[];
@@ -44,11 +53,11 @@ function App() {
             setSuras(JSON.parse(cachedSuras));
         } else {
             axios.get('https://api.alquran.cloud/v1/surah')
-                .then((res: any) => {
+                .then((res) => {
                     setSuras(res.data.data);
                     localStorage.setItem('suras_list', JSON.stringify(res.data.data));
                 })
-                .catch((err: any) => console.error(err));
+                .catch((err) => console.error("Suras load error:", err));
         }
     }, []);
 
@@ -72,9 +81,10 @@ function App() {
 
         setLoading(true);
         axios.get(`https://api.alquran.cloud/v1/surah/${selectedSuraId}/editions/quran-uthmani,uz.sodik,en.transliteration`)
-            .then((res: any) => {
+            .then((res) => {
                 const [arabic, translation, translit] = res.data.data;
                 const suraNumber = String(selectedSuraId).padStart(3, '0');
+
                 const finalData: SuraData = {
                     title: uzbekNames[selectedSuraId],
                     arabicAyahs: arabic.ayahs,
@@ -82,12 +92,13 @@ function App() {
                     translitAyahs: translit.ayahs,
                     audioUrl: `https://server8.mp3quran.net/afs/${suraNumber}.mp3`
                 };
+
                 localStorage.setItem(cacheKey, JSON.stringify(finalData));
                 setSuraData(finalData);
                 setLoading(false);
             })
-            .catch((err: any) => {
-                console.error(err);
+            .catch((err) => {
+                console.error("Sura data fetch error:", err);
                 setLoading(false);
             });
     }, [selectedSuraId]);
@@ -95,20 +106,32 @@ function App() {
     const handleSuraSelect = (id: number) => {
         setSelectedSuraId(id);
         setIsSidebarOpen(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
         <ErrorBoundary>
             <SettingsProvider>
-                <div className={`app-wrapper ${isSidebarOpen ? 'sidebar-open' : ''}`}>
-                    <button className="menu-toggler" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                <div className={`app-wrapper ${isSidebarOpen ? 'is-nav-open' : ''}`}>
+
+                    <button
+                        className="menu-toggler"
+                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                        aria-label="Menuni ochish"
+                    >
                         {isSidebarOpen ? '✕' : '☰'}
                     </button>
 
-                    {isSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>}
+                    <div
+                        className="sidebar-overlay"
+                        onClick={() => setIsSidebarOpen(false)}
+                    ></div>
 
-                    <aside className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
-                        <div className="sidebar-logo"><h2>QUR'ON</h2></div>
+                    <aside className="sidebar">
+                        <div className="sidebar-logo">
+                            <h2>QUR'ON</h2>
+                        </div>
+
                         <div className="search-box">
                             <input
                                 type="text"
@@ -117,6 +140,7 @@ function App() {
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
+
                         <nav>
                             <ul>
                                 {filteredSuras.map((sura) => (
@@ -141,23 +165,37 @@ function App() {
 
                         <main className="suras-display">
                             {loading ? (
-                                <div className="loader">Yuklanmoqda...</div>
+                                <div className="loader">
+                                    <div className="spinner"></div>
+                                    <span>Yuklanmoqda...</span>
+                                </div>
                             ) : suraData ? (
                                 <SuraCard
-                                    title={`${selectedSuraId}. ${suraData.title} surasi`}
+                                    title={`${selectedSuraId}. ${suraData.title}`}
                                     audioURL={suraData.audioUrl}
                                     originalText={suraData.arabicAyahs}
                                     translationText={suraData.uzbekAyahs}
                                     translitText={suraData.translitAyahs}
                                 />
                             ) : (
-                                <div className="error-msg">Ma'lumot topilmadi.</div>
+                                <div className="loader">
+                                    <span>Ma'lumot topilmadi.</span>
+                                </div>
                             )}
                         </main>
 
                         <footer className="main-footer">
-                            <p className="copyright">© 2026 - Qur'on Kundaligi</p>
+                            <p>© 2026 - Qur'on Kundaligi. Barcha huquqlar himoyalangan.</p>
                         </footer>
+
+                        {suraData && !loading && (
+                            <div className="custom-player-ui">
+                                <audio controls key={suraData.audioUrl}>
+                                    <source src={suraData.audioUrl} type="audio/mpeg" />
+                                    Brauzeringiz audio elementni qo'llab-quvvatlamaydi.
+                                </audio>
+                            </div>
+                        )}
                     </div>
                 </div>
             </SettingsProvider>

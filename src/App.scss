@@ -2,15 +2,35 @@ $deep-emerald: #0b2521;
 $classic-green: #1a4d44;
 $soft-cream: #fcfaf5;
 $gold-leaf: #c5a059;
-$sidebar-width: 320px;
-$text-main: #2c3e50;
+$gold-dark: #a68443;
 $white: #ffffff;
+$text-main: #2c3e50;
+$text-light: #7f8c8d;
+$error-red: #e74c3c;
+$sidebar-width: 300px;
+$sidebar-mobile: 280px;
+$transition-speed: 0.4s;
 $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
+$pattern-url: 'https://www.transparenttextures.com/patterns/arabesque.png';
 
-@mixin center-content {
+@mixin flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@mixin scrollbar-style {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($gold-leaf, 0.3);
+    border-radius: 10px;
+    &:hover { background: $gold-leaf; }
+  }
 }
 
 * {
@@ -23,357 +43,321 @@ body {
   font-family: 'Playfair Display', serif;
   background-color: $soft-cream;
   color: $text-main;
-  line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-.menu-toggler {
-  display: none;
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1100;
-  background: $deep-emerald;
-  color: $gold-leaf;
-  border: 1px solid $gold-leaf;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: 0.3s;
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  position: relative;
+  transition: all $transition-speed $easing;
 
-  &:hover {
-    background: $classic-green;
+  &.is-nav-open {
+    .sidebar {
+      transform: translateX(0) !important;
+      box-shadow: 20px 0 60px rgba(0,0,0,0.5);
+    }
+    .sidebar-overlay {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
   }
 }
 
 .sidebar-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1900;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all $transition-speed ease;
+}
+
+.menu-toggler {
+  display: none !important;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 2500;
+  background: $deep-emerald;
+  color: $gold-leaf;
+  border: 1px solid $gold-leaf;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  @include flex-center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s $easing;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.sidebar {
+  width: $sidebar-width;
+  background-color: $classic-green;
+  background-image: url($pattern-url);
+  color: $white;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(2px);
-  z-index: 999;
-  transition: 0.3s;
-}
-
-.app-wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2000;
+  border-right: 2px solid $gold-leaf;
   display: flex;
-  width: 100vw;
-  min-height: 100vh;
+  flex-direction: column;
+  transition: transform $transition-speed $easing;
+  transform: translateX(0);
 
-  .sidebar {
-    width: $sidebar-width;
-    background-color: $deep-emerald;
-    color: $white;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    border-right: 2px solid $gold-leaf;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-    transition: transform 0.4s $easing;
-
-    .sidebar-logo {
-      padding: 30px 20px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-      h2 {
-        font-family: 'Cinzel', serif;
-        font-size: 1.5rem;
-        color: $gold-leaf;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-      }
-    }
-
-    .search-box {
-      padding: 15px 20px;
-      background: rgba(0, 0, 0, 0.1);
-
-      input {
-        width: 100%;
-        padding: 12px 15px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(197, 160, 89, 0.3);
-        border-radius: 8px;
-        color: white;
-        outline: none;
-        transition: 0.3s;
-
-        &::placeholder {
-          color: rgba(255, 255, 255, 0.4);
-        }
-
-        &:focus {
-          border-color: $gold-leaf;
-          background: rgba(255, 255, 255, 0.1);
-        }
-      }
-    }
-
-    nav {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px 0;
-
-      &::-webkit-scrollbar { width: 5px; }
-      &::-webkit-scrollbar-thumb {
-        background: $gold-leaf;
-        border-radius: 10px;
-      }
-
-      ul {
-        list-style: none;
-
-        li {
-          padding: 15px 25px;
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-          transition: all 0.3s $easing;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-
-          &:hover {
-            background-color: rgba(26, 77, 68, 0.4);
-            color: $gold-leaf;
-          }
-
-          &.active {
-            background-color: $classic-green;
-            color: $gold-leaf;
-            position: relative;
-
-            &::before {
-              content: '';
-              position: absolute;
-              left: 0;
-              width: 4px;
-              height: 100%;
-              background-color: $gold-leaf;
-            }
-          }
-
-          .sura-number {
-            width: 35px;
-            height: 35px;
-            @include center-content;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            margin-right: 15px;
-            font-size: 0.8rem;
-          }
-        }
-      }
+  .sidebar-logo {
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba($gold-leaf, 0.2);
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.7rem;
+      color: $gold-leaf;
+      letter-spacing: 4px;
+      text-transform: uppercase;
     }
   }
 
-  .app-container {
-    flex: 1;
-    margin-left: $sidebar-width;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    transition: margin-left 0.4s $easing;
-
-    .main-header {
-      background-color: $classic-green;
-      padding: 40px 20px;
-      color: $white;
-      text-align: center;
-      background-image: radial-gradient(circle at center, $classic-green 0%, $deep-emerald 100%);
-
-      h1 {
-        font-size: 2.2rem;
-        margin-bottom: 5px;
-      }
-
-      p {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        color: rgba(255, 255, 255, 0.6);
-      }
-    }
-
-    .suras-display {
-      flex: 1;
-      padding: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
+  .search-box {
+    padding: 15px 20px;
+    input {
       width: 100%;
-
-      .loader {
-        @include center-content;
-        height: 400px;
-        flex-direction: column;
-        gap: 15px;
-        color: $classic-green;
-
-        &::before {
-          content: "";
-          width: 40px;
-          height: 40px;
-          border: 3px solid rgba(26, 77, 68, 0.1);
-          border-top-color: $gold-leaf;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-      }
-
-      .error-msg {
-        text-align: center;
-        padding: 50px;
-        color: #d63031;
-      }
+      padding: 12px 15px;
+      background: rgba($white, 0.08);
+      border: 1px solid rgba($gold-leaf, 0.3);
+      border-radius: 8px;
+      color: $white;
+      outline: none;
+      font-family: inherit;
+      &::placeholder { color: rgba($white, 0.4); }
+      &:focus { border-color: $gold-leaf; background: rgba($white, 0.12); }
     }
+  }
 
-    .main-footer {
-      padding: 20px;
-      background-color: darken($soft-cream, 2%);
-      text-align: center;
-      border-top: 1px solid rgba(0,0,0,0.05);
-
-      .copyright {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        opacity: 0.6;
+  nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 0;
+    @include scrollbar-style;
+    ul {
+      list-style: none;
+      li {
+        padding: 14px 25px;
+        margin: 4px 12px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.2s;
+        color: rgba($white, 0.7);
+        &:hover { background: rgba($white, 0.05); color: $gold-leaf; }
+        &.active {
+          background: $deep-emerald;
+          color: $gold-leaf;
+          border-left: 3px solid $gold-leaf;
+        }
+        .sura-number {
+          width: 30px;
+          height: 30px;
+          border: 1px solid rgba($gold-leaf, 0.4);
+          border-radius: 6px;
+          margin-right: 12px;
+          @include flex-center;
+          font-size: 0.75rem;
+          flex-shrink: 0;
+        }
       }
     }
   }
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.app-container {
+  flex: 1;
+  margin-left: $sidebar-width;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left $transition-speed $easing;
+
+  .main-header {
+    background: $classic-green;
+    padding: 60px 20px;
+    text-align: center;
+    color: $white;
+    background-image: url($pattern-url);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    h1 { font-family: 'Cinzel', serif; font-size: 2.8rem; margin-bottom: 8px; }
+    p { text-transform: uppercase; letter-spacing: 4px; color: $gold-leaf; font-size: 0.85rem; }
+  }
+
+  .suras-display {
+    flex: 1;
+    padding: 30px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+.main-footer {
+  background: $deep-emerald;
+  padding: 30px;
+  text-align: center;
+  color: rgba($white, 0.4);
+  font-size: 0.8rem;
+  border-top: 1px solid rgba($gold-leaf, 0.2);
+}
+
+.sura-card-styles {
+  background: $white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  margin-bottom: 80px;
+
+  .ayah-block {
+    margin-bottom: 35px;
+    border-bottom: 1px solid #f5f5f5;
+    padding-bottom: 25px;
+    &:last-child { border-bottom: none; }
+
+    .arabic {
+      font-size: 2.1rem;
+      text-align: right;
+      direction: rtl;
+      font-family: 'Amiri', serif;
+      line-height: 2.2;
+      color: $deep-emerald;
+      margin-bottom: 15px;
+    }
+    .translation { font-size: 1.05rem; line-height: 1.6; color: #333; }
+    .transliteration { font-size: 0.9rem; color: $gold-dark; font-style: italic; margin-top: 5px; }
+  }
+}
+
+.custom-player-ui {
+  position: fixed;
+  bottom: 0;
+  left: $sidebar-width;
+  right: 0;
+  z-index: 2500;
+  background-color: $classic-green;
+  background-image: url($pattern-url);
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px solid $gold-leaf;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+  transition: all $transition-speed $easing;
+
+  audio {
+    width: 100%;
+    max-width: 800px;
+    height: 45px;
+    filter: sepia(20%) saturate(70%) hue-rotate(90deg) brightness(110%) contrast(90%);
+    border-radius: 50px;
+
+    &::-webkit-media-controls-enclosure {
+      background-color: rgba($white, 0.1);
+      border: 1px solid rgba($gold-leaf, 0.3);
+    }
+
+    &::-webkit-media-controls-panel {
+      background-image: linear-gradient(to right, rgba($deep-emerald, 0.9), rgba($classic-green, 0.9));
+    }
+
+    &::-webkit-media-controls-play-button,
+    &::-webkit-media-controls-mute-button {
+      background-color: $gold-leaf;
+      border-radius: 50%;
+      transform: scale(1.1);
+      &:hover {
+        background-color: $white;
+      }
+    }
+
+    &::-webkit-media-controls-current-time-display,
+    &::-webkit-media-controls-time-remaining-display {
+      color: $gold-leaf;
+      font-family: 'Cinzel', serif;
+      font-weight: bold;
+    }
+  }
+}
+
+.loader {
+  @include flex-center;
+  height: 300px;
+  flex-direction: column;
+  .spinner {
+    width: 45px;
+    height: 45px;
+    border: 3px solid rgba($gold-leaf, 0.1);
+    border-top-color: $gold-leaf;
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+    margin-bottom: 15px;
+  }
+  span { font-family: 'Cinzel', serif; color: $classic-green; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+button, input, li {
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (max-width: 1024px) {
-  .app-wrapper {
-    .sidebar {
-      width: 260px;
-    }
-    .app-container {
-      margin-left: 260px;
+  .menu-toggler {
+    display: flex !important;
+  }
+  .sidebar {
+    transform: translateX(-100%);
+    width: $sidebar-mobile;
+  }
+  .app-container {
+    margin-left: 0 !important;
+  }
+  .custom-player-ui {
+    left: 0;
+    padding: 10px 15px;
+    audio {
+      height: 40px;
     }
   }
 }
 
 @media (max-width: 768px) {
-  .menu-toggler {
-    display: block;
+  .app-container .main-header {
+    padding: 80px 20px 40px;
+    h1 { font-size: 2rem; }
+    p { font-size: 0.7rem; letter-spacing: 2px; }
   }
-
-  .app-wrapper {
-    flex-direction: column;
-
-    .sidebar {
-      width: 280px;
-      position: fixed;
-      left: 0;
-      transform: translateX(-100%);
-      height: 100vh;
-      border-right: 2px solid $gold-leaf;
-      border-bottom: none;
-
-      &.active {
-        transform: translateX(0);
-      }
-
-      .sidebar-logo {
-        padding: 20px;
-      }
-
-      nav {
-        max-height: none;
-      }
-    }
-
-    .app-container {
-      margin-left: 0;
-
-      .main-header {
-        padding: 60px 15px 30px;
-
-        h1 {
-          font-size: 1.8rem;
-        }
-      }
-
-      .suras-display {
-        padding: 15px;
-      }
-    }
+  .sura-card-styles {
+    padding: 20px;
+    .ayah-block .arabic { font-size: 1.8rem; }
   }
 }
 
 @media (max-width: 480px) {
-  .app-wrapper {
-    .sidebar {
-      width: 85%;
-
-      .sidebar-logo h2 {
-        font-size: 1.2rem;
-        letter-spacing: 1.5px;
-      }
-
-      .search-box {
-        padding: 10px 15px;
-
-        input {
-          padding: 10px;
-          font-size: 0.9rem;
-        }
-      }
-
-      nav ul li {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-
-        .sura-number {
-          width: 30px;
-          height: 30px;
-          font-size: 0.7rem;
-          margin-right: 10px;
-        }
-      }
-    }
-
-    .app-container {
-      .main-header {
-        padding: 70px 10px 25px;
-
-        h1 {
-          font-size: 1.5rem;
-        }
-
-        p {
-          font-size: 0.7rem;
-          letter-spacing: 1.5px;
-        }
-      }
-
-      .suras-display {
-        padding: 10px;
-
-        .loader {
-          height: 250px;
-        }
-      }
-
-      .main-footer {
-        padding: 15px;
-
-        .copyright {
-          font-size: 0.6rem;
-        }
-      }
-    }
+  .sidebar {
+    width: 85%;
+  }
+  .main-header {
+    padding: 90px 15px 40px !important;
   }
 }
