@@ -8,9 +8,9 @@ $text-main: #2c3e50;
 $text-light: #7f8c8d;
 $error-red: #e74c3c;
 $sidebar-width: 320px;
-$sidebar-mobile: 85%;
-$transition-speed: 0.5s;
-$easing: cubic-bezier(0.4, 0, 0.2, 1);
+$sidebar-mobile: 88%;
+$transition-speed: 0.45s;
+$easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 $pattern-url: 'https://www.transparenttextures.com/patterns/arabesque.png';
 
 @mixin flex-center {
@@ -19,34 +19,38 @@ $pattern-url: 'https://www.transparenttextures.com/patterns/arabesque.png';
   justify-content: center;
 }
 
-@mixin scrollbar-style {
+@mixin scrollbar-custom {
   &::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
   }
   &::-webkit-scrollbar-track {
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: rgba($gold-leaf, 0.3);
-    border-radius: 20px;
-    &:hover { background: $gold-leaf; }
+    background: rgba($gold-leaf, 0.4);
+    border-radius: 10px;
   }
 }
 
-@mixin card-shadow {
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+@mixin card-style {
+  background: $white;
+  border-radius: 35px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+  border: 1px solid rgba($gold-leaf, 0.2);
 }
 
-@mixin glass-effect {
-  background: rgba($white, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba($gold-leaf, 0.2);
+@mixin touch-friendly {
+  min-height: 48px;
+  min-width: 48px;
+  cursor: pointer;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: none;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -69,20 +73,17 @@ body {
   min-height: 100vh;
   width: 100vw;
   position: relative;
-  transition: transform $transition-speed $easing;
+  transition: all $transition-speed $easing;
 
   &.is-nav-open {
     .sidebar {
       transform: translateX(0) !important;
-      box-shadow: 30px 0 70px rgba(0, 0, 0, 0.4);
+      box-shadow: 30px 0 80px rgba(0,0,0,0.5);
     }
     .sidebar-overlay {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-    }
-    .app-container {
-      filter: blur(2px);
     }
   }
 }
@@ -90,13 +91,13 @@ body {
 .sidebar-overlay {
   position: fixed;
   inset: 0;
-  background: rgba($deep-emerald, 0.8);
-  backdrop-filter: blur(5px);
+  background: rgba($deep-emerald, 0.85);
+  backdrop-filter: blur(8px);
   z-index: 1900;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: all $transition-speed ease;
+  transition: all 0.5s ease;
 }
 
 .menu-toggler {
@@ -105,21 +106,21 @@ body {
   top: 20px;
   left: 20px;
   z-index: 2500;
-  background: $deep-emerald;
-  color: $gold-leaf;
+  background: $white;
+  color: $classic-green;
   border: 2px solid $gold-leaf;
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
   font-size: 1.8rem;
-  cursor: pointer;
   @include flex-center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s $easing;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: 0.3s $easing;
 
   &:active {
     transform: scale(0.85);
-    background: $classic-green;
+    background: $gold-leaf;
+    color: $white;
   }
 }
 
@@ -133,52 +134,50 @@ body {
   left: 0;
   top: 0;
   z-index: 2000;
-  border-right: 3px solid $gold-leaf;
+  border-right: 4px solid $gold-leaf;
   display: flex;
   flex-direction: column;
   transition: transform $transition-speed $easing;
   transform: translateX(0);
 
   .sidebar-logo {
-    padding: 50px 25px;
+    padding: 60px 25px;
     text-align: center;
     border-bottom: 1px solid rgba($gold-leaf, 0.2);
-    background: rgba($deep-emerald, 0.2);
+    background: rgba(0,0,0,0.1);
 
     h2 {
       font-family: 'Montserrat', sans-serif;
       font-weight: 800;
-      font-size: 1.7rem;
+      font-size: 1.8rem;
       color: $gold-leaf;
       letter-spacing: 3px;
       text-transform: uppercase;
-      text-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
   }
 
   .search-box {
-    padding: 25px 20px;
+    padding: 30px 20px;
 
     input {
       width: 100%;
-      padding: 16px 20px;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba($gold-leaf, 0.3);
-      border-radius: 14px;
+      padding: 18px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba($gold-leaf, 0.4);
+      border-radius: 16px;
       color: $white;
-      outline: none;
       font-size: 1.1rem;
       font-family: 'Montserrat', sans-serif;
-      transition: all 0.3s ease;
-
-      &::placeholder {
-        color: rgba($white, 0.4);
-      }
+      transition: 0.3s;
 
       &:focus {
         border-color: $gold-leaf;
-        background: rgba(0, 0, 0, 0.3);
-        box-shadow: 0 0 15px rgba($gold-leaf, 0.2);
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      &::placeholder {
+        color: rgba($white, 0.4);
       }
     }
   }
@@ -187,48 +186,46 @@ body {
     flex: 1;
     overflow-y: auto;
     padding: 15px 0;
-    @include scrollbar-style;
+    @include scrollbar-custom;
 
     ul {
       list-style: none;
 
       li {
-        padding: 20px 25px;
+        padding: 22px 30px;
         margin: 8px 15px;
-        border-radius: 15px;
+        border-radius: 18px;
         display: flex;
         align-items: center;
         cursor: pointer;
-        transition: all 0.3s ease;
-        color: rgba($white, 0.8);
+        transition: 0.4s;
+        color: rgba($white, 0.85);
         font-family: 'Montserrat', sans-serif;
         font-weight: 600;
-        font-size: 1.15rem;
+        font-size: 1.1rem;
 
         &:hover {
-          background: rgba($white, 0.08);
+          background: rgba($white, 0.1);
           color: $gold-leaf;
-          padding-left: 30px;
+          transform: translateX(10px);
         }
 
         &.active {
-          background: $deep-emerald;
-          color: $gold-leaf;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-          border-left: 6px solid $gold-leaf;
+          background: $gold-leaf;
+          color: $white;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
         .sura-number {
           width: 42px;
           height: 42px;
-          border: 2px solid rgba($gold-leaf, 0.4);
+          border: 2px solid rgba($white, 0.3);
           border-radius: 12px;
           margin-right: 18px;
           @include flex-center;
           font-size: 1rem;
           font-weight: 800;
           flex-shrink: 0;
-          background: rgba(0, 0, 0, 0.1);
         }
       }
     }
@@ -241,355 +238,444 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  transition: margin-left $transition-speed $easing, filter 0.3s ease;
+  transition: all $transition-speed $easing;
 
   .main-header {
     background: $classic-green;
-    padding: 80px 30px;
+    background-image: url($pattern-url);
+    padding: 100px 30px;
     text-align: center;
     color: $white;
-    background-image: url($pattern-url);
-    background-blend-mode: soft-light;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    border-bottom: 4px solid $gold-leaf;
+    border-bottom: 5px solid $gold-leaf;
     position: relative;
+    overflow: hidden;
 
     h1 {
       font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 900;
+      font-size: clamp(2.2rem, 8vw, 4.5rem);
       margin-bottom: 15px;
-      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      text-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
 
     p {
       font-family: 'Montserrat', sans-serif;
       text-transform: uppercase;
-      letter-spacing: 5px;
+      letter-spacing: 6px;
       color: $gold-leaf;
-      font-size: 1.1rem;
-      font-weight: 700;
-      opacity: 0.9;
+      font-size: 1.2rem;
+      font-weight: 800;
     }
-  }
-
-  .suras-display {
-    flex: 1;
-    padding: 60px 25px;
-    max-width: 1100px;
-    margin: 0 auto;
-    width: 100%;
   }
 }
 
-.sura-card-styles {
-  background: $white;
-  border-radius: 35px;
-  padding: 65px;
-  @include card-shadow;
-  margin-bottom: 80px;
-  border: 1px solid rgba($gold-leaf, 0.1);
+.sura-card {
+  width: 100%;
   position: relative;
-  overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
+  .sura-header-sticky {
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    background: linear-gradient(90deg, $gold-leaf, $gold-dark);
+    background: rgba($white, 0.96);
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    padding: 30px 25px;
+    border-bottom: 3px solid $gold-leaf;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+
+    .sura-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      color: $classic-green;
+      margin-bottom: 25px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .card-font-settings {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+
+      .setting-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        small {
+          text-transform: uppercase;
+          color: $text-light;
+          font-weight: 800;
+          font-size: 0.75rem;
+          letter-spacing: 2px;
+        }
+
+        .btns {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          background: $soft-cream;
+          padding: 8px 20px;
+          border-radius: 20px;
+          border: 2px solid rgba($gold-leaf, 0.3);
+
+          button {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: $white;
+            color: $classic-green;
+            font-size: 1.6rem;
+            border-radius: 14px;
+            @include flex-center;
+            @include touch-friendly;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.2s;
+
+            &:active {
+              transform: scale(0.9);
+              background: $gold-leaf;
+              color: $white;
+            }
+          }
+
+          .val {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: $classic-green;
+            min-width: 35px;
+            font-family: 'Montserrat', sans-serif;
+          }
+        }
+      }
+    }
   }
+}
+
+.ayahs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 60px 25px 220px;
+  max-width: 1100px;
+  margin: 0 auto;
 
   .ayah-block {
-    margin-bottom: 70px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding-bottom: 60px;
-    transition: transform 0.3s ease;
+    @include card-style;
+    padding: 60px;
+    position: relative;
+    transition: 0.4s $easing;
 
-    &:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
+    &::before {
+      content: "✨";
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 1.5rem;
+      opacity: 0.2;
     }
 
-    &:hover {
-      transform: translateY(-5px);
+    .arabic-line {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 30px;
+      margin-bottom: 40px;
+
+      .quran-text {
+        direction: rtl;
+        font-family: 'Amiri', serif;
+        color: $deep-emerald;
+        line-height: 2.5;
+        text-align: right;
+        width: 100%;
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-weight: 500;
+        word-spacing: 8px;
+      }
+
+      .ayah-number-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+
+        .ayah-number {
+          width: 60px;
+          height: 60px;
+          border: 3px solid $gold-leaf;
+          background: $white;
+          border-radius: 20px;
+          @include flex-center;
+          font-weight: 900;
+          color: $gold-leaf;
+          font-size: 1.2rem;
+          box-shadow: 0 8px 20px rgba($gold-leaf, 0.15);
+          font-family: 'Montserrat', sans-serif;
+          transform: rotate(45deg);
+
+          span {
+            transform: rotate(-45deg);
+          }
+        }
+      }
     }
 
-    .arabic {
-      font-size: clamp(2.5rem, 8vw, 4.2rem);
-      text-align: right;
-      direction: rtl;
-      font-family: 'Amiri', serif;
-      line-height: 2.4;
-      color: $deep-emerald;
-      margin-bottom: 35px;
-      display: block;
-      word-spacing: 8px;
-      font-weight: 400;
-    }
+    .details-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      padding-top: 40px;
+      border-top: 2px solid rgba($gold-leaf, 0.1);
 
-    .translation {
-      font-family: 'Lora', serif;
-      font-size: clamp(1.2rem, 3vw, 1.5rem);
-      line-height: 2;
-      color: #2c3e50;
-      font-weight: 500;
-      padding: 0 20px;
-      border-left: 4px solid $gold-leaf;
-    }
+      .detail-item {
+        p {
+          line-height: 2;
+        }
 
-    .transliteration {
-      font-family: 'Lora', serif;
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: $gold-dark;
-      font-style: italic;
-      margin-top: 25px;
-      line-height: 1.8;
-      padding: 0 20px;
-      opacity: 0.8;
+        &.translit p {
+          color: $gold-dark;
+          font-weight: 700;
+          font-size: 1.3rem;
+          font-style: italic;
+          border-left: 5px solid $gold-leaf;
+          padding-left: 20px;
+        }
+
+        &.translation p {
+          color: $text-main;
+          font-weight: 500;
+          font-size: 1.4rem;
+          background: rgba($soft-cream, 0.5);
+          padding: 20px;
+          border-radius: 15px;
+        }
+      }
     }
   }
 }
 
-.custom-player-ui {
+.audio-player-fixed {
   position: fixed;
   bottom: 0;
   left: $sidebar-width;
   right: 0;
-  z-index: 2500;
-  background-color: $deep-emerald;
+  z-index: 2000;
+  background: $deep-emerald;
   background-image: url($pattern-url);
-  background-blend-mode: overlay;
-  padding: 25px 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top: 4px solid $gold-leaf;
-  box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(15px);
-  transition: all $transition-speed $easing;
+  padding: 30px 50px;
+  border-top: 5px solid $gold-leaf;
+  box-shadow: 0 -20px 60px rgba(0,0,0,0.5);
 
-  audio {
-    width: 100%;
-    max-width: 1000px;
-    height: 56px;
-    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+  .player-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 40px;
 
-    &::-webkit-media-controls-enclosure {
-      background-color: rgba($white, 0.1);
-      border: 1px solid rgba($gold-leaf, 0.3);
-      border-radius: 100px;
+    .sura-info {
+      min-width: 200px;
+      .playing-label {
+        font-size: 0.75rem;
+        color: $gold-leaf;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 800;
+        display: block;
+        margin-bottom: 5px;
+      }
+      .sura-name {
+        color: $white;
+        font-weight: 800;
+        font-size: 1.4rem;
+        font-family: 'Playfair Display', serif;
+      }
+    }
+
+    audio {
+      flex: 1;
+      height: 55px;
+      filter: invert(1) hue-rotate(180deg) brightness(1.5);
     }
   }
 }
 
 .main-footer {
   background: $deep-emerald;
-  padding: 60px 30px 200px;
+  padding: 80px 30px 200px;
   text-align: center;
   color: rgba($white, 0.5);
   font-family: 'Montserrat', sans-serif;
   font-size: 1.1rem;
+  font-weight: 600;
   border-top: 2px solid rgba($gold-leaf, 0.3);
-  background-image: url($pattern-url);
-  background-size: 200px;
-}
-
-.loader {
-  @include flex-center;
-  height: 450px;
-  flex-direction: column;
-
-  .spinner {
-    width: 70px;
-    height: 70px;
-    border: 6px solid rgba($gold-leaf, 0.1);
-    border-top-color: $gold-leaf;
-    border-radius: 50%;
-    animation: spin 1s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    margin-bottom: 30px;
-    box-shadow: 0 0 20px rgba($gold-leaf, 0.2);
-  }
-
-  span {
-    font-family: 'Montserrat', sans-serif;
-    color: $classic-green;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-button, input, li {
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
 }
 
 @media (max-width: 1200px) {
-  .sura-card-styles {
-    padding: 45px 35px;
+  .audio-player-fixed {
+    left: 0;
   }
 }
 
 @media (max-width: 1024px) {
-  .menu-toggler {
-    display: flex !important;
-  }
+  .menu-toggler { display: flex !important; }
+  .sidebar { transform: translateX(-100%); width: $sidebar-mobile; }
+  .app-container { margin-left: 0 !important; }
 
-  .sidebar {
-    transform: translateX(-100%);
-    width: $sidebar-mobile;
-    max-width: 380px;
-    box-shadow: none;
-  }
-
-  .app-container {
-    margin-left: 0 !important;
-  }
-
-  .custom-player-ui {
-    left: 0;
-    padding: 20px;
-    height: 110px;
-  }
-
-  .main-header {
-    padding: 120px 20px 60px;
+  .ayah-block {
+    padding: 45px 30px;
+    border-radius: 30px;
   }
 }
 
 @media (max-width: 768px) {
-  html {
-    font-size: 15px;
-  }
+  html { font-size: 14px; }
 
   .app-container .main-header {
-    h1 {
-      font-size: 2.5rem;
-    }
-    p {
-      font-size: 0.9rem;
-      letter-spacing: 3px;
-    }
+    padding: 120px 20px 60px;
+    h1 { font-size: 2.8rem; }
   }
 
-  .suras-display {
-    padding: 30px 15px;
-  }
+  .sura-header-sticky {
+    padding: 20px 15px !important;
 
-  .sura-card-styles {
-    padding: 40px 25px;
-    border-radius: 25px;
-    margin-bottom: 50px;
+    .card-font-settings {
+      gap: 15px !important;
 
-    .ayah-block {
-      margin-bottom: 50px;
-      padding-bottom: 45px;
-
-      .arabic {
-        font-size: 2.4rem;
-        line-height: 2.5;
-        margin-bottom: 25px;
-      }
-
-      .translation {
-        font-size: 1.3rem;
-        padding: 0 15px;
-      }
-
-      .transliteration {
-        font-size: 1.1rem;
-        padding: 0 15px;
+      .setting-item {
+        .btns {
+          padding: 10px 15px !important;
+          button { width: 48px !important; height: 48px !important; }
+        }
       }
     }
   }
 
-  .main-footer {
-    padding-bottom: 160px;
+  .ayahs-container {
+    padding: 30px 15px 160px;
+    gap: 40px;
+  }
+
+  .audio-player-fixed {
+    padding: 20px;
+    .player-wrapper .sura-info { display: none; }
   }
 }
 
 @media (max-width: 480px) {
-  .sidebar {
-    width: 90%;
-  }
+  .sidebar { width: 92%; }
 
   .menu-toggler {
-    width: 50px;
-    height: 50px;
+    width: 65px;
+    height: 65px;
     top: 15px;
     left: 15px;
-    font-size: 1.5rem;
   }
 
-  .app-container .main-header {
-    padding: 100px 15px 50px !important;
-    h1 {
-      font-size: 2rem;
-    }
-  }
+  .sura-header-sticky {
+    .sura-title { font-size: 1.8rem !important; }
 
-  .sura-card-styles {
-    padding: 30px 18px;
-    border-radius: 20px;
+    .card-font-settings {
+      justify-content: space-around !important;
 
-    .ayah-block {
-      margin-bottom: 40px;
-      padding-bottom: 35px;
-
-      .arabic {
-        font-size: 2.1rem;
-        line-height: 2.6;
-        word-spacing: 4px;
-      }
-
-      .translation {
-        font-size: 1.2rem;
-        line-height: 1.8;
-      }
-
-      .transliteration {
-        font-size: 1rem;
+      .setting-item {
+        small { font-size: 0.6rem !important; }
+        .btns {
+          padding: 6px 12px !important;
+          gap: 10px !important;
+          border-radius: 15px !important;
+          .val { min-width: 30px !important; font-size: 1rem !important; }
+          button {
+            width: 45px !important;
+            height: 45px !important;
+            border-radius: 12px !important;
+            font-size: 1.8rem !important;
+          }
+        }
       }
     }
   }
 
-  .sidebar .sidebar-logo {
-    padding: 40px 15px;
-    h2 {
-      font-size: 1.4rem;
+  .ayah-block {
+    padding: 40px 20px !important;
+    border-radius: 25px !important;
+
+    .arabic-line {
+      gap: 20px !important;
+
+      .quran-text {
+        font-size: 2.6rem !important;
+        line-height: 2.4 !important;
+        text-align: right !important;
+      }
+
+      .ayah-number-wrap .ayah-number {
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 1.1rem !important;
+      }
+    }
+
+    .details-grid {
+      padding-top: 30px !important;
+      gap: 25px !important;
+
+      .detail-item {
+        &.translit p {
+          font-size: 1.2rem !important;
+          line-height: 1.7 !important;
+        }
+        &.translation p {
+          font-size: 1.3rem !important;
+          padding: 15px !important;
+          line-height: 1.8 !important;
+        }
+      }
     }
   }
 
-  .custom-player-ui {
-    padding: 10px 15px;
-    height: 100px;
+  .audio-player-fixed {
+    height: 110px;
+    padding: 15px;
 
-    audio {
-      height: 48px;
+    .player-wrapper {
+      width: 100%;
+      audio { height: 50px; }
     }
   }
 
   .main-footer {
-    padding: 50px 15px 140px;
-    font-size: 0.9rem;
+    padding: 60px 20px 140px;
   }
 }
 
-@media (max-height: 600px) {
-  .sidebar .sidebar-logo {
-    padding: 20px;
+.scrolling-settings {
+  @media (max-width: 420px) {
+    .card-font-settings {
+      justify-content: flex-start !important;
+      overflow-x: auto;
+      padding: 10px 5px 20px;
+      @include scrollbar-custom;
+      flex-wrap: nowrap !important;
+      -webkit-overflow-scrolling: touch;
+
+      .setting-item {
+        flex-shrink: 0;
+        min-width: 140px;
+      }
+    }
   }
-  .sidebar .search-box {
-    padding: 10px 20px;
-  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.ayah-number {
+  animation: float 4s ease-in-out infinite;
 }

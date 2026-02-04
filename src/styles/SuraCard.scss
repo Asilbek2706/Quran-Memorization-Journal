@@ -3,12 +3,13 @@ $deep-emerald: #0b2521;
 $gold-leaf: #c38017;
 $gold-soft: #d4af37;
 $soft-cream: #fcfaf5;
+$white: #ffffff;
 $text-main: #2c3e50;
 $text-muted: #576574;
-$white: #ffffff;
-$shadow-light: 0 8px 30px rgba(0, 0, 0, 0.05);
-$shadow-strong: 0 -15px 40px rgba(0, 0, 0, 0.35);
-$easing: cubic-bezier(0.25, 0.8, 0.25, 1);
+$bg-overlay: rgba(11, 37, 33, 0.85);
+$shadow-light: 0 10px 30px rgba(0, 0, 0, 0.05);
+$shadow-strong: 0 -12px 45px rgba(0, 0, 0, 0.3);
+$easing: cubic-bezier(0.4, 0, 0.2, 1);
 $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
 
 @mixin flex-center {
@@ -17,106 +18,135 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
   justify-content: center;
 }
 
-@mixin glass-morphism {
-  background-color: rgba($soft-cream, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+@mixin glass-effect {
+  background-color: rgba($soft-cream, 0.97);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
-@mixin hover-lift {
-  transition: all 0.3s $easing;
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+@mixin no-select {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($gold-leaf, 0.3);
+    border-radius: 10px;
   }
 }
 
 .sura-card {
   background-color: transparent;
   width: 100%;
-  animation: fadeIn 0.6s $easing;
+  animation: slideUpFade 0.7s $easing;
   position: relative;
+  min-height: 100vh;
 
   .sura-header-sticky {
     position: sticky;
     top: 0;
-    @include glass-morphism;
+    @include glass-effect;
     z-index: 1100;
-    padding: 30px 20px;
+    padding: 25px 20px;
     border-bottom: 3px solid $gold-leaf;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.04);
 
     .sura-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
       color: $classic-green;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       font-weight: 800;
-      letter-spacing: -0.5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      letter-spacing: -0.2px;
     }
 
     .card-font-settings {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 25px;
+      align-items: center;
+      gap: 20px;
+      max-width: 100%;
+
+      @media (max-width: 500px) {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 5px 10px 15px;
+        gap: 15px;
+        @include custom-scrollbar;
+        -webkit-overflow-scrolling: touch;
+
+        &::after {
+          content: '';
+          padding-right: 1px;
+        }
+      }
 
       .setting-item {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
+        flex-shrink: 0;
 
         small {
           text-transform: uppercase;
           color: $classic-green;
-          font-weight: 800;
-          font-size: 0.75rem;
-          letter-spacing: 1.5px;
+          font-weight: 700;
+          font-size: 0.65rem;
+          letter-spacing: 1.2px;
           opacity: 0.8;
+          @include no-select;
         }
 
         .btns {
           display: flex;
           align-items: center;
-          gap: 15px;
+          gap: 12px;
           background: $white;
-          padding: 8px 18px;
-          border-radius: 14px;
-          border: 1px solid rgba($gold-leaf, 0.25);
+          padding: 6px 14px;
+          border-radius: 50px;
+          border: 1.5px solid rgba($gold-leaf, 0.2);
           box-shadow: $shadow-light;
 
           button {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border: none;
-            background: rgba($gold-leaf, 0.05);
+            background: rgba($gold-leaf, 0.03);
             color: $classic-green;
-            font-size: 1.5rem;
-            border-radius: 8px;
+            font-size: 1.4rem;
+            border-radius: 50%;
             cursor: pointer;
             @include flex-center;
+            @include no-select;
             transition: all 0.2s ease;
 
             &:hover {
-              color: $white;
               background-color: $gold-leaf;
-              transform: scale(1.1);
+              color: $white;
             }
 
             &:active {
-              transform: scale(0.9);
+              transform: scale(0.85);
+              background-color: $gold-soft;
             }
           }
 
           .val {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: $text-main;
-            min-width: 35px;
+            min-width: 30px;
             text-align: center;
             font-family: 'Inter', sans-serif;
           }
@@ -128,73 +158,83 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
   .ayahs-container {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    padding: 0 20px 180px 20px;
-    max-width: 1000px;
+    gap: 30px;
+    padding: 10px 20px 200px 20px;
+    max-width: 900px;
     margin: 0 auto;
 
     .ayah-block {
       background: $white;
-      padding: 50px;
-      border-radius: 24px;
-      border: 1px solid rgba($gold-leaf, 0.12);
+      padding: 45px;
+      border-radius: 28px;
+      border: 1px solid rgba($gold-leaf, 0.1);
       box-shadow: $shadow-light;
-      @include hover-lift;
       position: relative;
       overflow: hidden;
+      transition: all 0.4s $easing;
 
-      &::after {
+      &::before {
         content: '';
         position: absolute;
         top: 0;
-        right: 0;
-        width: 6px;
-        height: 100%;
-        background: $gold-leaf;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, $gold-leaf, transparent);
         opacity: 0;
         transition: 0.3s;
       }
 
-      &:hover::after {
-        opacity: 1;
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+
+        &::before {
+          opacity: 1;
+        }
       }
 
       .arabic-line {
         display: flex;
         flex-direction: row-reverse;
         align-items: flex-start;
-        gap: 35px;
+        gap: 30px;
         margin-bottom: 35px;
 
         .quran-text {
           direction: rtl;
           font-family: 'Amiri', serif;
           color: $deep-emerald;
-          line-height: 2.4;
+          line-height: 2.5;
           text-align: right;
           flex: 1;
           margin: 0;
-          font-size: clamp(2rem, 6vw, 3.2rem);
-          transition: font-size 0.3s $easing;
-          word-spacing: 5px;
+          font-size: clamp(2.1rem, 7vw, 3.4rem);
+          transition: font-size 0.3s ease;
+          word-break: break-word;
         }
 
         .ayah-number {
-          width: 55px;
-          height: 55px;
+          width: 54px;
+          height: 54px;
           border: 2px solid $gold-leaf;
-          border-radius: 16px;
+          border-radius: 50%;
           @include flex-center;
-          font-size: 1.1rem;
+          font-size: 1rem;
           font-weight: 800;
           color: $gold-leaf;
           flex-shrink: 0;
-          background-color: rgba($gold-leaf, 0.03);
+          background-color: rgba($gold-leaf, 0.05);
           font-family: 'Inter', sans-serif;
-          transform: rotate(45deg);
+          margin-top: 10px;
+          position: relative;
 
-          span {
-            transform: rotate(-45deg);
+          &::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border: 1px solid rgba($gold-leaf, 0.2);
+            border-radius: 50%;
           }
         }
       }
@@ -202,43 +242,43 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
       .details-grid {
         display: flex;
         flex-direction: column;
-        gap: 22px;
+        gap: 24px;
         padding-top: 30px;
-        border-top: 1px solid rgba($gold-leaf, 0.1);
+        border-top: 1px dashed rgba($gold-leaf, 0.2);
 
         .detail-item {
           position: relative;
-          padding-left: 20px;
+          padding-left: 15px;
 
           &::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 12px;
-            width: 8px;
-            height: 2px;
+            top: 10px;
+            width: 4px;
+            height: 4px;
             background: $gold-leaf;
+            border-radius: 50%;
           }
 
           p {
             margin: 0;
-            line-height: 1.9;
-            transition: font-size 0.3s $easing;
+            line-height: 1.8;
+            transition: font-size 0.3s ease;
           }
 
           &.translit p {
-            color: #111D3EFF;
+            color: $classic-green;
             font-weight: 600;
-            font-size: 1.2rem;
-            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            letter-spacing: 0.3px;
           }
 
           &.translation p {
             color: $text-muted;
-            font-style: italic;
+            font-style: normal;
             font-weight: 400;
-            font-size: 1.2rem;
-            letter-spacing: 0.2px;
+            font-size: 1.15rem;
           }
         }
       }
@@ -248,43 +288,49 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
   .audio-player-fixed {
     position: fixed;
     bottom: 0;
-    left: 320px;
+    left: 0;
     right: 0;
     background-color: $deep-emerald;
     background-image: url($pattern);
     background-blend-mode: overlay;
-    padding: 20px 45px;
+    padding: 15px 40px;
     z-index: 1200;
     border-top: 4px solid $gold-leaf;
     box-shadow: $shadow-strong;
-    transition: all 0.4s $easing;
+
+    @media (min-width: 1201px) {
+      left: 320px;
+    }
 
     .player-wrapper {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 40px;
+      gap: 30px;
 
       .sura-info {
         display: flex;
         flex-direction: column;
-        min-width: 200px;
+        min-width: 180px;
 
         .playing-label {
-          font-size: 0.7rem;
+          font-size: 0.65rem;
           color: $gold-leaf;
           text-transform: uppercase;
-          letter-spacing: 2px;
-          font-weight: 800;
-          margin-bottom: 4px;
+          letter-spacing: 1.5px;
+          font-weight: 700;
+          margin-bottom: 2px;
         }
 
         .sura-name {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           color: $white;
-          font-weight: 700;
+          font-weight: 600;
           font-family: 'Playfair Display', serif;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
 
@@ -300,8 +346,7 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
 
         .rhap_main-toggle-button {
           color: $gold-leaf;
-          font-size: 44px;
-          filter: drop-shadow(0 0 10px rgba($gold-leaf, 0.2));
+          font-size: 42px;
         }
 
         .rhap_progress-filled {
@@ -310,14 +355,13 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
 
         .rhap_progress-bar {
           background-color: rgba($white, 0.15);
-          height: 8px;
-          border-radius: 4px;
+          height: 6px;
+          border-radius: 10px;
         }
 
         .rhap_time {
-          color: $white;
-          font-weight: 600;
-          font-size: 0.9rem;
+          color: rgba($white, 0.8);
+          font-size: 0.85rem;
         }
 
         .rhap_volume-button {
@@ -328,10 +372,10 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
   }
 }
 
-@keyframes fadeIn {
+@keyframes slideUpFade {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
@@ -339,22 +383,17 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
   }
 }
 
-@media (max-width: 1200px) {
-  .sura-card .audio-player-fixed {
-    left: 0;
-  }
-}
-
 @media (max-width: 1024px) {
   .sura-card {
     .ayahs-container {
-      padding-bottom: 180px;
+      padding: 10px 15px 180px 15px;
+      gap: 25px;
     }
     .audio-player-fixed {
       padding: 15px 25px;
       .player-wrapper {
         gap: 20px;
-        .sura-info { min-width: 160px; }
+        .sura-info { min-width: 140px; }
       }
     }
   }
@@ -363,35 +402,35 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
 @media (max-width: 768px) {
   .sura-card {
     .sura-header-sticky {
-      padding: 20px 15px;
-      margin-bottom: 30px;
-      .sura-title { font-size: 2rem; margin-bottom: 15px; }
+      padding: 15px 10px;
+      .sura-title { font-size: 1.8rem; margin-bottom: 15px; }
+
       .card-font-settings {
         gap: 15px;
         .setting-item {
-          gap: 6px;
           .btns {
-            padding: 6px 12px;
-            button { width: 32px; height: 32px; font-size: 1.3rem; }
-            .val { font-size: 0.9rem; }
+            padding: 5px 10px;
+            button { width: 34px; height: 34px; font-size: 1.2rem; }
+            .val { font-size: 0.9rem; min-width: 25px; }
           }
         }
       }
     }
 
     .ayahs-container {
-      gap: 30px;
-      padding: 0 15px 150px 15px;
       .ayah-block {
-        padding: 35px 25px;
+        padding: 30px 20px;
         border-radius: 20px;
+
         .arabic-line {
-          gap: 25px;
+          gap: 20px;
           margin-bottom: 25px;
-          .quran-text { line-height: 2.1; font-size: 2.2rem; }
-          .ayah-number { width: 48px; height: 48px; font-size: 0.95rem; }
+          .quran-text { line-height: 2.2; font-size: 2.2rem; }
+          .ayah-number { width: 46px; height: 46px; font-size: 0.9rem; }
         }
+
         .details-grid {
+          gap: 18px;
           padding-top: 25px;
           .detail-item {
             &.translit p { font-size: 1.1rem; }
@@ -402,7 +441,7 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
     }
 
     .audio-player-fixed {
-      padding: 18px 20px;
+      padding: 12px 15px;
       .player-wrapper {
         .sura-info { display: none; }
       }
@@ -413,65 +452,54 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
 @media (max-width: 480px) {
   .sura-card {
     .sura-header-sticky {
-      padding: 15px 10px;
-      .sura-title { font-size: 1.7rem; }
-      .card-font-settings {
-        justify-content: space-evenly;
-        .setting-item {
-          small { font-size: 0.6rem; letter-spacing: 1px; }
-          .btns {
-            padding: 4px 10px;
-            gap: 10px;
-            .val { min-width: 28px; }
-            button { font-size: 1.2rem; width: 30px; height: 30px; }
+      padding: 12px 5px;
+      .sura-title { font-size: 1.6rem; }
+    }
+
+    .ayahs-container {
+      padding-bottom: 160px;
+      .ayah-block {
+        padding: 25px 15px;
+        .arabic-line {
+          flex-direction: column-reverse;
+          align-items: flex-end;
+          gap: 12px;
+          .quran-text {
+            width: 100%;
+            text-align: right;
+            line-height: 2.4;
+            font-size: 2rem;
+          }
+          .ayah-number {
+            margin-right: 0;
+            width: 42px;
+            height: 42px;
+            font-size: 0.85rem;
+          }
+        }
+
+        .details-grid {
+          gap: 15px;
+          .detail-item {
+            padding-left: 12px;
+            &.translit p { font-size: 1.05rem; }
+            &.translation p { font-size: 1.05rem; line-height: 1.6; }
           }
         }
       }
     }
 
-    .ayah-container {
-      padding: 0 10px 140px 10px;
-    }
-
-    .ayah-block {
-      padding: 25px 18px !important;
-      .arabic-line {
-        flex-direction: column-reverse;
-        align-items: flex-end;
-        gap: 15px;
-        .quran-text {
-          width: 100%;
-          text-align: right;
-          line-height: 2.3;
-          font-size: 1.9rem;
-        }
-        .ayah-number {
-          margin-right: 0;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-          font-size: 0.85rem;
-        }
-      }
-      .details-grid {
-        gap: 15px;
-        .detail-item {
-          padding-left: 15px;
-          &.translit p { font-size: 1rem; line-height: 1.6; }
-          &.translation p { font-size: 1rem; line-height: 1.6; }
-        }
-      }
-    }
-
     .audio-player-fixed {
-      padding: 12px 10px;
+      padding: 10px;
       .player-wrapper {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
+
         .custom-h5-player {
           width: 100%;
-          .rhap_main-toggle-button { font-size: 36px; }
-          .rhap_progress-section { margin: 5px 0; }
+          .rhap_main-toggle-button { font-size: 34px; }
+          .rhap_controls-section { margin-top: 5px; }
+          .rhap_progress-section { margin-bottom: 5px; }
           .rhap_volume-controls { display: none; }
         }
       }
@@ -479,9 +507,18 @@ $pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
   }
 }
 
-@media (max-height: 700px) {
+@media (max-height: 700px) and (orientation: landscape) {
   .sura-card .sura-header-sticky {
-    padding: 12px 15px;
-    .sura-title { margin-bottom: 10px; font-size: 1.5rem; }
+    padding: 8px 15px;
+    .sura-title { margin-bottom: 5px; font-size: 1.4rem; }
   }
+}
+
+.font-size-transition {
+  transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ayah-highlight {
+  background-color: rgba($gold-leaf, 0.03) !important;
+  border-color: rgba($gold-leaf, 0.4) !important;
 }
