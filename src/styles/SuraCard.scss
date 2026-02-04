@@ -1,80 +1,109 @@
 $classic-green: #1a4d44;
 $deep-emerald: #0b2521;
 $gold-leaf: #c38017;
+$gold-soft: #d4af37;
 $soft-cream: #fcfaf5;
 $text-main: #2c3e50;
+$text-muted: #576574;
 $white: #ffffff;
+$shadow-light: 0 8px 30px rgba(0, 0, 0, 0.05);
+$shadow-strong: 0 -15px 40px rgba(0, 0, 0, 0.35);
 $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
+$pattern: 'https://www.transparenttextures.com/patterns/arabesque.png';
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin glass-morphism {
+  background-color: rgba($soft-cream, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@mixin hover-lift {
+  transition: all 0.3s $easing;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  }
+}
 
 .sura-card {
   background-color: transparent;
   width: 100%;
-  animation: fadeIn 0.5s $easing;
+  animation: fadeIn 0.6s $easing;
+  position: relative;
 
   .sura-header-sticky {
     position: sticky;
     top: 0;
-    background-color: rgba($soft-cream, 0.98);
-    backdrop-filter: blur(10px);
-    z-index: 100;
-    padding: 25px 15px;
-    border-bottom: 2px solid $gold-leaf;
-    margin-bottom: 30px;
+    @include glass-morphism;
+    z-index: 1100;
+    padding: 30px 20px;
+    border-bottom: 3px solid $gold-leaf;
+    margin-bottom: 40px;
     text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 
     .sura-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-size: clamp(2rem, 5vw, 2.8rem);
       color: $classic-green;
-      margin-bottom: 20px;
-      font-weight: 700;
+      margin-bottom: 25px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     .card-font-settings {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 25px;
 
       .setting-item {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
 
         small {
           text-transform: uppercase;
           color: $classic-green;
-          font-weight: 700;
-          font-size: 0.7rem;
-          letter-spacing: 1.2px;
+          font-weight: 800;
+          font-size: 0.75rem;
+          letter-spacing: 1.5px;
+          opacity: 0.8;
         }
 
         .btns {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 15px;
           background: $white;
-          padding: 6px 15px;
-          border-radius: 12px;
-          border: 1px solid rgba($gold-leaf, 0.3);
-          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+          padding: 8px 18px;
+          border-radius: 14px;
+          border: 1px solid rgba($gold-leaf, 0.25);
+          box-shadow: $shadow-light;
 
           button {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border: none;
-            background: transparent;
+            background: rgba($gold-leaf, 0.05);
             color: $classic-green;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s ease;
+            @include flex-center;
+            transition: all 0.2s ease;
 
             &:hover {
-              color: $gold-leaf;
+              color: $white;
+              background-color: $gold-leaf;
               transform: scale(1.1);
             }
 
@@ -84,10 +113,10 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
           }
 
           .val {
-            font-size: 0.9rem;
-            font-weight: 700;
+            font-size: 1rem;
+            font-weight: 800;
             color: $text-main;
-            min-width: 30px;
+            min-width: 35px;
             text-align: center;
             font-family: 'Inter', sans-serif;
           }
@@ -99,86 +128,117 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
   .ayahs-container {
     display: flex;
     flex-direction: column;
-    gap: 35px;
-    padding: 0 15px 160px 15px;
-    max-width: 1100px;
+    gap: 40px;
+    padding: 0 20px 180px 20px;
+    max-width: 1000px;
     margin: 0 auto;
 
     .ayah-block {
       background: $white;
-      padding: 40px;
-      border-radius: 20px;
-      border: 1px solid rgba($gold-leaf, 0.15);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
-      transition: all 0.3s ease;
+      padding: 50px;
+      border-radius: 24px;
+      border: 1px solid rgba($gold-leaf, 0.12);
+      box-shadow: $shadow-light;
+      @include hover-lift;
+      position: relative;
+      overflow: hidden;
 
-      &:hover {
-        border-color: rgba($gold-leaf, 0.5);
-        transform: translateY(-2px);
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 6px;
+        height: 100%;
+        background: $gold-leaf;
+        opacity: 0;
+        transition: 0.3s;
+      }
+
+      &:hover::after {
+        opacity: 1;
       }
 
       .arabic-line {
         display: flex;
         flex-direction: row-reverse;
         align-items: flex-start;
-        gap: 30px;
-        margin-bottom: 30px;
+        gap: 35px;
+        margin-bottom: 35px;
 
         .quran-text {
           direction: rtl;
           font-family: 'Amiri', serif;
-          color: $classic-green;
-          line-height: 2.3;
+          color: $deep-emerald;
+          line-height: 2.4;
           text-align: right;
           flex: 1;
           margin: 0;
-          font-size: clamp(1.8rem, 6vw, 2.8rem);
+          font-size: clamp(2rem, 6vw, 3.2rem);
           transition: font-size 0.3s $easing;
+          word-spacing: 5px;
         }
 
         .ayah-number {
-          width: 50px;
-          height: 50px;
+          width: 55px;
+          height: 55px;
           border: 2px solid $gold-leaf;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1rem;
+          border-radius: 16px;
+          @include flex-center;
+          font-size: 1.1rem;
           font-weight: 800;
           color: $gold-leaf;
           flex-shrink: 0;
-          background-color: rgba($gold-leaf, 0.05);
+          background-color: rgba($gold-leaf, 0.03);
           font-family: 'Inter', sans-serif;
+          transform: rotate(45deg);
+
+          span {
+            transform: rotate(-45deg);
+          }
         }
       }
 
       .details-grid {
         display: flex;
         flex-direction: column;
-        gap: 18px;
-        padding-top: 25px;
-        border-top: 1px dashed rgba($gold-leaf, 0.2);
+        gap: 22px;
+        padding-top: 30px;
+        border-top: 1px solid rgba($gold-leaf, 0.1);
 
         .detail-item {
+          position: relative;
+          padding-left: 20px;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 8px;
+            height: 2px;
+            background: $gold-leaf;
+          }
+
           p {
             margin: 0;
-            line-height: 1.8;
+            line-height: 1.9;
             transition: font-size 0.3s $easing;
           }
 
           &.translit p {
             color: #111D3EFF;
-            font-weight: 500;
-            font-size: 1.1rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            font-family: 'Inter', sans-serif;
           }
 
           &.translation p {
-            color: $text-main;
-            opacity: 0.9;
+            color: $text-muted;
             font-style: italic;
             font-weight: 400;
-            font-size: 1.15rem;
+            font-size: 1.2rem;
+            letter-spacing: 0.2px;
           }
         }
       }
@@ -190,37 +250,40 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
     bottom: 0;
     left: 320px;
     right: 0;
-    background: $deep-emerald;
-    padding: 15px 40px;
-    z-index: 1000;
+    background-color: $deep-emerald;
+    background-image: url($pattern);
+    background-blend-mode: overlay;
+    padding: 20px 45px;
+    z-index: 1200;
     border-top: 4px solid $gold-leaf;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+    box-shadow: $shadow-strong;
+    transition: all 0.4s $easing;
 
     .player-wrapper {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 30px;
+      gap: 40px;
 
       .sura-info {
         display: flex;
         flex-direction: column;
-        min-width: 180px;
+        min-width: 200px;
 
         .playing-label {
-          font-size: 0.65rem;
+          font-size: 0.7rem;
           color: $gold-leaf;
           text-transform: uppercase;
-          letter-spacing: 1.5px;
-          font-weight: 700;
-          margin-bottom: 2px;
+          letter-spacing: 2px;
+          font-weight: 800;
+          margin-bottom: 4px;
         }
 
         .sura-name {
-          font-size: 1.1rem;
+          font-size: 1.2rem;
           color: $white;
-          font-weight: 600;
+          font-weight: 700;
           font-family: 'Playfair Display', serif;
         }
       }
@@ -232,11 +295,13 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
           background: transparent;
           box-shadow: none;
           padding: 0;
+          border: none;
         }
 
         .rhap_main-toggle-button {
           color: $gold-leaf;
-          font-size: 38px;
+          font-size: 44px;
+          filter: drop-shadow(0 0 10px rgba($gold-leaf, 0.2));
         }
 
         .rhap_progress-filled {
@@ -244,13 +309,15 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .rhap_progress-bar {
-          background-color: rgba($white, 0.1);
-          height: 6px;
+          background-color: rgba($white, 0.15);
+          height: 8px;
+          border-radius: 4px;
         }
 
         .rhap_time {
-          color: rgba($white, 0.9);
-          font-family: 'Inter', sans-serif;
+          color: $white;
+          font-weight: 600;
+          font-size: 0.9rem;
         }
 
         .rhap_volume-button {
@@ -264,7 +331,7 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -272,15 +339,22 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 }
 
+@media (max-width: 1200px) {
+  .sura-card .audio-player-fixed {
+    left: 0;
+  }
+}
+
 @media (max-width: 1024px) {
   .sura-card {
+    .ayahs-container {
+      padding-bottom: 180px;
+    }
     .audio-player-fixed {
-      left: 0;
-      padding: 15px 20px;
-
+      padding: 15px 25px;
       .player-wrapper {
-        gap: 15px;
-        .sura-info { min-width: 140px; }
+        gap: 20px;
+        .sura-info { min-width: 160px; }
       }
     }
   }
@@ -289,41 +363,49 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 @media (max-width: 768px) {
   .sura-card {
     .sura-header-sticky {
-      padding: 15px 10px;
-      .sura-title { font-size: 1.8rem; }
+      padding: 20px 15px;
+      margin-bottom: 30px;
+      .sura-title { font-size: 2rem; margin-bottom: 15px; }
       .card-font-settings {
-        gap: 12px;
-        .setting-item .btns {
-          padding: 4px 10px;
-          button { width: 28px; height: 28px; }
+        gap: 15px;
+        .setting-item {
+          gap: 6px;
+          .btns {
+            padding: 6px 12px;
+            button { width: 32px; height: 32px; font-size: 1.3rem; }
+            .val { font-size: 0.9rem; }
+          }
         }
       }
     }
 
     .ayahs-container {
-      gap: 25px;
-      padding: 0 12px 130px 12px;
+      gap: 30px;
+      padding: 0 15px 150px 15px;
       .ayah-block {
-        padding: 25px;
-        border-radius: 16px;
+        padding: 35px 25px;
+        border-radius: 20px;
         .arabic-line {
-          gap: 20px;
-          .quran-text { line-height: 2.0; }
-          .ayah-number { width: 42px; height: 42px; font-size: 0.9rem; }
+          gap: 25px;
+          margin-bottom: 25px;
+          .quran-text { line-height: 2.1; font-size: 2.2rem; }
+          .ayah-number { width: 48px; height: 48px; font-size: 0.95rem; }
         }
         .details-grid {
-          gap: 12px;
+          padding-top: 25px;
           .detail-item {
-            &.translit p { font-size: 1rem; }
-            &.translation p { font-size: 1.05rem; }
+            &.translit p { font-size: 1.1rem; }
+            &.translation p { font-size: 1.1rem; }
           }
         }
       }
     }
 
     .audio-player-fixed {
-      padding: 12px 15px;
-      .player-wrapper .sura-info { display: none; }
+      padding: 18px 20px;
+      .player-wrapper {
+        .sura-info { display: none; }
+      }
     }
   }
 }
@@ -331,45 +413,75 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 @media (max-width: 480px) {
   .sura-card {
     .sura-header-sticky {
-      .sura-title { font-size: 1.6rem; }
+      padding: 15px 10px;
+      .sura-title { font-size: 1.7rem; }
       .card-font-settings {
-        justify-content: space-between;
+        justify-content: space-evenly;
         .setting-item {
-          small { font-size: 0.6rem; }
+          small { font-size: 0.6rem; letter-spacing: 1px; }
           .btns {
-            padding: 3px 8px;
-            gap: 8px;
-            .val { min-width: 25px; font-size: 0.8rem; }
-            button { font-size: 1.2rem; }
+            padding: 4px 10px;
+            gap: 10px;
+            .val { min-width: 28px; }
+            button { font-size: 1.2rem; width: 30px; height: 30px; }
           }
         }
       }
     }
 
-    .ayahs-container {
-      .ayah-block {
-        padding: 20px 15px;
-        .arabic-line {
-          flex-direction: column-reverse;
-          align-items: flex-end;
-          gap: 12px;
-          .quran-text { width: 100%; text-align: right; line-height: 2.2; }
-          .ayah-number { margin-right: 0; width: 38px; height: 38px; }
+    .ayah-container {
+      padding: 0 10px 140px 10px;
+    }
+
+    .ayah-block {
+      padding: 25px 18px !important;
+      .arabic-line {
+        flex-direction: column-reverse;
+        align-items: flex-end;
+        gap: 15px;
+        .quran-text {
+          width: 100%;
+          text-align: right;
+          line-height: 2.3;
+          font-size: 1.9rem;
+        }
+        .ayah-number {
+          margin-right: 0;
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          font-size: 0.85rem;
+        }
+      }
+      .details-grid {
+        gap: 15px;
+        .detail-item {
+          padding-left: 15px;
+          &.translit p { font-size: 1rem; line-height: 1.6; }
+          &.translation p { font-size: 1rem; line-height: 1.6; }
         }
       }
     }
 
     .audio-player-fixed {
+      padding: 12px 10px;
       .player-wrapper {
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
         .custom-h5-player {
           width: 100%;
-          .rhap_main-toggle-button { font-size: 32px; }
+          .rhap_main-toggle-button { font-size: 36px; }
+          .rhap_progress-section { margin: 5px 0; }
           .rhap_volume-controls { display: none; }
-          .rhap_controls-section { margin-top: 5px; }
         }
       }
     }
+  }
+}
+
+@media (max-height: 700px) {
+  .sura-card .sura-header-sticky {
+    padding: 12px 15px;
+    .sura-title { margin-bottom: 10px; font-size: 1.5rem; }
   }
 }
