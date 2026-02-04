@@ -17,16 +17,16 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
     background-color: rgba($soft-cream, 0.98);
     backdrop-filter: blur(10px);
     z-index: 100;
-    padding: 20px 0;
+    padding: 25px 15px;
     border-bottom: 2px solid $gold-leaf;
     margin-bottom: 30px;
     text-align: center;
 
     .sura-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
       color: $classic-green;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       font-weight: 700;
     }
 
@@ -34,39 +34,39 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 25px;
+      gap: 20px;
 
       .setting-item {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
 
         small {
           text-transform: uppercase;
           color: $classic-green;
           font-weight: 700;
-          font-size: 0.65rem;
+          font-size: 0.7rem;
           letter-spacing: 1.2px;
         }
 
         .btns {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 12px;
           background: $white;
-          padding: 4px 12px;
-          border-radius: 10px;
+          padding: 6px 15px;
+          border-radius: 12px;
           border: 1px solid rgba($gold-leaf, 0.3);
-          box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 
           button {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border: none;
             background: transparent;
             color: $classic-green;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -75,7 +75,7 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 
             &:hover {
               color: $gold-leaf;
-              transform: scale(1.15);
+              transform: scale(1.1);
             }
 
             &:active {
@@ -84,10 +84,10 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
           }
 
           .val {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: $text-main;
-            min-width: 35px;
+            min-width: 30px;
             text-align: center;
             font-family: 'Inter', sans-serif;
           }
@@ -100,71 +100,77 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
     display: flex;
     flex-direction: column;
     gap: 35px;
-    padding: 0 10px 140px 10px;
+    padding: 0 15px 160px 15px;
+    max-width: 1100px;
+    margin: 0 auto;
 
     .ayah-block {
       background: $white;
-      padding: 35px;
-      border-radius: 16px;
+      padding: 40px;
+      border-radius: 20px;
       border: 1px solid rgba($gold-leaf, 0.15);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
-      transition: border-color 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
 
       &:hover {
         border-color: rgba($gold-leaf, 0.5);
+        transform: translateY(-2px);
       }
 
       .arabic-line {
         display: flex;
         flex-direction: row-reverse;
         align-items: flex-start;
-        gap: 25px;
-        margin-bottom: 25px;
+        gap: 30px;
+        margin-bottom: 30px;
 
         .quran-text {
           direction: rtl;
           font-family: 'Amiri', serif;
           color: $classic-green;
-          line-height: 2.2;
+          line-height: 2.3;
           text-align: right;
           flex: 1;
           margin: 0;
+          font-size: clamp(1.8rem, 6vw, 2.8rem);
           transition: font-size 0.3s $easing;
         }
 
         .ayah-number {
-          width: 45px;
-          height: 45px;
+          width: 50px;
+          height: 50px;
           border: 2px solid $gold-leaf;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 0.9rem;
+          font-size: 1rem;
           font-weight: 800;
           color: $gold-leaf;
           flex-shrink: 0;
           background-color: rgba($gold-leaf, 0.05);
+          font-family: 'Inter', sans-serif;
         }
       }
 
       .details-grid {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        padding-top: 20px;
+        gap: 18px;
+        padding-top: 25px;
         border-top: 1px dashed rgba($gold-leaf, 0.2);
 
         .detail-item {
           p {
             margin: 0;
-            line-height: 1.7;
+            line-height: 1.8;
             transition: font-size 0.3s $easing;
           }
 
           &.translit p {
             color: #111D3EFF;
             font-weight: 500;
+            font-size: 1.1rem;
           }
 
           &.translation p {
@@ -172,6 +178,7 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
             opacity: 0.9;
             font-style: italic;
             font-weight: 400;
+            font-size: 1.15rem;
           }
         }
       }
@@ -184,33 +191,34 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
     left: 320px;
     right: 0;
     background: $deep-emerald;
-    padding: 15px 50px;
+    padding: 15px 40px;
     z-index: 1000;
     border-top: 4px solid $gold-leaf;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
 
     .player-wrapper {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 40px;
+      gap: 30px;
 
       .sura-info {
         display: flex;
         flex-direction: column;
-        min-width: 200px;
+        min-width: 180px;
 
         .playing-label {
-          font-size: 0.6rem;
+          font-size: 0.65rem;
           color: $gold-leaf;
           text-transform: uppercase;
           letter-spacing: 1.5px;
           font-weight: 700;
+          margin-bottom: 2px;
         }
 
         .sura-name {
-          font-size: 1rem;
+          font-size: 1.1rem;
           color: $white;
           font-weight: 600;
           font-family: 'Playfair Display', serif;
@@ -228,7 +236,7 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 
         .rhap_main-toggle-button {
           color: $gold-leaf;
-          font-size: 35px;
+          font-size: 38px;
         }
 
         .rhap_progress-filled {
@@ -236,32 +244,17 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .rhap_progress-bar {
-          background-color: rgba($white, 0.15);
+          background-color: rgba($white, 0.1);
           height: 6px;
         }
 
-        .rhap_progress-indicator {
-          background: $white;
-          width: 14px;
-          height: 14px;
-        }
-
         .rhap_time {
-          color: rgba($white, 0.8);
-          font-size: 0.85rem;
-          font-weight: 500;
+          color: rgba($white, 0.9);
+          font-family: 'Inter', sans-serif;
         }
 
         .rhap_volume-button {
           color: $gold-leaf;
-        }
-
-        .rhap_volume-bar {
-          background: rgba($white, 0.15);
-        }
-
-        .rhap_volume-indicator {
-          background: $gold-leaf;
         }
       }
     }
@@ -271,7 +264,7 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -279,19 +272,15 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 }
 
-
 @media (max-width: 1024px) {
   .sura-card {
     .audio-player-fixed {
       left: 0;
-      padding: 15px 25px;
+      padding: 15px 20px;
 
       .player-wrapper {
-        gap: 20px;
-
-        .sura-info {
-          min-width: 150px;
-        }
+        gap: 15px;
+        .sura-info { min-width: 140px; }
       }
     }
   }
@@ -300,56 +289,41 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 @media (max-width: 768px) {
   .sura-card {
     .sura-header-sticky {
-      padding: 15px 0;
-
-      .sura-title {
-        font-size: 1.8rem;
-        margin-bottom: 10px;
-      }
-
+      padding: 15px 10px;
+      .sura-title { font-size: 1.8rem; }
       .card-font-settings {
-        gap: 15px;
-
-        .setting-item {
-          .btns {
-            padding: 2px 8px;
-            gap: 6px;
-          }
+        gap: 12px;
+        .setting-item .btns {
+          padding: 4px 10px;
+          button { width: 28px; height: 28px; }
         }
       }
     }
 
     .ayahs-container {
-      gap: 20px;
-      padding: 0 10px 120px 10px;
-
+      gap: 25px;
+      padding: 0 12px 130px 12px;
       .ayah-block {
-        padding: 20px;
-
+        padding: 25px;
+        border-radius: 16px;
         .arabic-line {
-          gap: 15px;
-
-          .quran-text {
-            line-height: 1.8;
-          }
-
-          .ayah-number {
-            width: 35px;
-            height: 35px;
-            font-size: 0.8rem;
+          gap: 20px;
+          .quran-text { line-height: 2.0; }
+          .ayah-number { width: 42px; height: 42px; font-size: 0.9rem; }
+        }
+        .details-grid {
+          gap: 12px;
+          .detail-item {
+            &.translit p { font-size: 1rem; }
+            &.translation p { font-size: 1.05rem; }
           }
         }
       }
     }
 
     .audio-player-fixed {
-      padding: 10px 15px;
-
-      .player-wrapper {
-        .sura-info {
-          display: none;
-        }
-      }
+      padding: 12px 15px;
+      .player-wrapper .sura-info { display: none; }
     }
   }
 }
@@ -357,24 +331,16 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 @media (max-width: 480px) {
   .sura-card {
     .sura-header-sticky {
-      .sura-title {
-        font-size: 1.5rem;
-      }
-
+      .sura-title { font-size: 1.6rem; }
       .card-font-settings {
-        gap: 10px;
-        justify-content: space-around;
-
+        justify-content: space-between;
         .setting-item {
-          small {
-            font-size: 0.55rem;
-          }
-
+          small { font-size: 0.6rem; }
           .btns {
-            .val {
-              min-width: 25px;
-              font-size: 0.75rem;
-            }
+            padding: 3px 8px;
+            gap: 8px;
+            .val { min-width: 25px; font-size: 0.8rem; }
+            button { font-size: 1.2rem; }
           }
         }
       }
@@ -382,37 +348,26 @@ $easing: cubic-bezier(0.25, 0.8, 0.25, 1);
 
     .ayahs-container {
       .ayah-block {
-        padding: 15px;
-
+        padding: 20px 15px;
         .arabic-line {
           flex-direction: column-reverse;
           align-items: flex-end;
-          gap: 10px;
-
-          .quran-text {
-            width: 100%;
-          }
+          gap: 12px;
+          .quran-text { width: 100%; text-align: right; line-height: 2.2; }
+          .ayah-number { margin-right: 0; width: 38px; height: 38px; }
         }
       }
     }
 
     .audio-player-fixed {
-      height: auto;
-
       .player-wrapper {
         flex-direction: column;
-        gap: 5px;
-
+        gap: 8px;
         .custom-h5-player {
           width: 100%;
-
-          .rhap_main-toggle-button {
-            font-size: 30px;
-          }
-
-          .rhap_volume-controls {
-            display: none;
-          }
+          .rhap_main-toggle-button { font-size: 32px; }
+          .rhap_volume-controls { display: none; }
+          .rhap_controls-section { margin-top: 5px; }
         }
       }
     }
