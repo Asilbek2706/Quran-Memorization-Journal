@@ -438,8 +438,7 @@ body {
         &.translit p {
           color: $gold-dark;
           font-weight: 700;
-          font-size: 1.3rem;
-          font-style: italic;
+          font-size: 1.5rem;
           border-left: 5px solid $gold-leaf;
           padding-left: 20px;
         }
@@ -448,6 +447,7 @@ body {
           color: $text-main;
           font-weight: 500;
           font-size: 1.4rem;
+          font-style: oblique;
           background: rgba($soft-cream, 0.5);
           padding: 20px;
           border-radius: 15px;
@@ -474,12 +474,13 @@ body {
     margin: 0 auto;
     display: flex;
     align-items: center;
+    font-size: 1.8rem;
     gap: 40px;
 
     .sura-info {
       min-width: 200px;
       .playing-label {
-        font-size: 0.75rem;
+        font-size: 1.75rem;
         color: $gold-leaf;
         text-transform: uppercase;
         letter-spacing: 3px;
@@ -490,14 +491,14 @@ body {
       .sura-name {
         color: $white;
         font-weight: 800;
-        font-size: 1.4rem;
+        font-size: 3rem;
         font-family: 'Playfair Display', serif;
       }
     }
 
     audio {
       flex: 1;
-      height: 55px;
+      height: 90px;
       filter: invert(1) hue-rotate(180deg) brightness(1.5);
     }
   }
@@ -569,8 +570,10 @@ body {
   .sidebar { width: 92%; }
 
   .menu-toggler {
-    width: 65px;
-    height: 65px;
+    width: 90px;
+    height: 90px;
+    border: none;
+    border-radius: 50%;
     top: 15px;
     left: 15px;
   }
@@ -625,8 +628,8 @@ body {
 
       .detail-item {
         &.translit p {
-          font-size: 1.2rem !important;
-          line-height: 1.7 !important;
+          font-size: 3rem !important;
+          line-height: 2 !important;
         }
         &.translation p {
           font-size: 1.3rem !important;
